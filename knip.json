@@ -1,0 +1,25 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": [
+        "src/main/index.ts",
+        "src/preload/index.ts",
+        "src/renderer/src/init.ts",
+        "src/renderer/src/entryPoint.tsx",
+        "src/renderer/src/windows/**/entryPoint.tsx",
+        "src/renderer/src/trace/traceWindow.tsx",
+        "src/renderer/src/workers/*.worker.ts",
+        "electron.vite.config.ts",
+        "vitest.config.ts",
+        "scripts/**/*.{ts,js}"
+      ],
+      "project": ["src/**/*.{ts,tsx}", "scripts/**/*.{ts,js}", "packages/mcp-trace/**/*.ts", "packages/shared/**/*.ts"],
+      "ignoreDependencies": ["@cherrystudio/ripgrep", "tailwindcss", "tw-animate-css"],
+      "ignoreBinaries": ["claude"]
+    },
+    "packages/*": {
+      "entry": ["src/index.ts", "tsdown.config.ts", "vitest.config.ts"]
+    }
+  }
+}
