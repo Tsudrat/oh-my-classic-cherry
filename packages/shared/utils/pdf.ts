@@ -1,4 +1,4 @@
-import { PDFParse } from 'pdf-parse'
+import { PDFParse } from 'pdf-parse2'
 
 /**
  * Extract text content from PDF data.
