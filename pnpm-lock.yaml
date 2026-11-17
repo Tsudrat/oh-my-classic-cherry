@@ -201,6 +201,7 @@ patchedDependencies:
   '@ai-sdk/openai@3.0.53': cca3e982196f5f68c917b79775bc1a612e6a474813403c147b7d764ab3c3bc2f
   '@ai-sdk/xai@3.0.83': 63b103a71ac811b1d6965c94177fe28e1c84a1fc0c0f167e64f34d28f9645f7c
   '@cherrystudio/embedjs-loader-web@0.1.31': 788a09b256cc5e6219b770de7fb13d5e531b67a3de59e796446fb279104ea3b2
+  '@cherrystudio/embedjs@0.1.31': 7a2074b652461ee3dfb8949f39847054fc442093dc628bad263ef1aadbd413c7
   '@langchain/core@1.0.2': 8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed
   '@napi-rs/system-ocr@1.0.2': aa1a73e445ee644774745b620589bb99d85bee6c95cc2a91fe9137e580da5bde
   '@openrouter/ai-sdk-provider': 6f905d5d4efe8dacf34b76a13807f84b19418cf68adc7febeaf1a96fa5886df8
@@ -369,7 +370,7 @@ importers:
         version: 1.3.0(typescript@5.8.3)
       '@cherrystudio/embedjs':
         specifier: 0.1.31
-        version: 0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0)))(@langchain/ollama@0.1.6(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(axios@1.15.2(debug@4.4.3(supports-color@8.1.1)))(cheerio@1.1.2)(handlebars@4.7.8)(supports-color@8.1.1)(ws@8.20.0)
+        version: 0.1.31(patch_hash=7a2074b652461ee3dfb8949f39847054fc442093dc628bad263ef1aadbd413c7)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0)))(@langchain/ollama@0.1.6(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(axios@1.15.2(debug@4.4.3(supports-color@8.1.1)))(cheerio@1.1.2)(handlebars@4.7.8)(supports-color@8.1.1)(ws@8.20.0)
       '@cherrystudio/embedjs-interfaces':
         specifier: 0.1.31
         version: 0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)
@@ -383,9 +384,6 @@ importers:
         specifier: 0.1.31
         version: 0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)
       '@cherrystudio/embedjs-loader-markdown':
-        specifier: 0.1.31
-        version: 0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0)))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)
-      '@cherrystudio/embedjs-loader-msoffice':
         specifier: 0.1.31
         version: 0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0)))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)
       '@cherrystudio/embedjs-loader-pdf':
@@ -2101,9 +2099,6 @@ packages:
 
   '@cherrystudio/embedjs-loader-markdown@0.1.31':
     resolution: {integrity: sha512-AEx6GZKVZ1Jb6efY4DwHSf9EdO+oi884ozQGHsrI6Bkb1Bctfqr+KdG2vOfarmEE/4hdbtLbCNk3x9hNhwGMPg==}
-
-  '@cherrystudio/embedjs-loader-msoffice@0.1.31':
-    resolution: {integrity: sha512-eBS1wAVK82KI0Cfy5+wFmsc2ysi98+eMN0DR2s37/JwujzeBT+C8T2QULHXXUUaesN5CB26XrnpRgKajNVEefg==}
 
   '@cherrystudio/embedjs-loader-pdf@0.1.31':
     resolution: {integrity: sha512-PRvUoYjgKO4JZ+GpJxlbNcbCgFyHpIz/40e41HPnOKHM2mCdTvDWKtRymUeqIpeUB4QV4fb5mCmRWWLyNvi6mw==}
@@ -13654,21 +13649,6 @@ snapshots:
       - openai
       - supports-color
 
-  '@cherrystudio/embedjs-loader-msoffice@0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0)))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)':
-    dependencies:
-      '@cherrystudio/embedjs-interfaces': 0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)
-      '@cherrystudio/embedjs-utils': 0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)
-      '@langchain/textsplitters': 0.1.0(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0)))
-      md5: 2.3.0
-      office-text-extractor: 3.0.3(supports-color@8.1.1)
-    transitivePeerDependencies:
-      - '@langchain/core'
-      - '@opentelemetry/api'
-      - '@opentelemetry/exporter-trace-otlp-proto'
-      - '@opentelemetry/sdk-trace-base'
-      - openai
-      - supports-color
-
   '@cherrystudio/embedjs-loader-pdf@0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0)))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)':
     dependencies:
       '@cherrystudio/embedjs-interfaces': 0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)
@@ -13775,7 +13755,7 @@ snapshots:
       - openai
       - supports-color
 
-  '@cherrystudio/embedjs@0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0)))(@langchain/ollama@0.1.6(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(axios@1.15.2(debug@4.4.3(supports-color@8.1.1)))(cheerio@1.1.2)(handlebars@4.7.8)(supports-color@8.1.1)(ws@8.20.0)':
+  '@cherrystudio/embedjs@0.1.31(patch_hash=7a2074b652461ee3dfb8949f39847054fc442093dc628bad263ef1aadbd413c7)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0)))(@langchain/ollama@0.1.6(@langchain/core@1.0.2(patch_hash=8dc787a82cebafe8b23c8826f25f29aca64fc8b43a0a1878e0010782e4da96ed)(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(axios@1.15.2(debug@4.4.3(supports-color@8.1.1)))(cheerio@1.1.2)(handlebars@4.7.8)(supports-color@8.1.1)(ws@8.20.0)':
     dependencies:
       '@cherrystudio/embedjs-interfaces': 0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)
       '@cherrystudio/embedjs-utils': 0.1.31(@cherrystudio/openai@6.15.0(ws@8.20.0)(zod@4.3.6))(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.2.0(@opentelemetry/api@1.9.0))(supports-color@8.1.1)

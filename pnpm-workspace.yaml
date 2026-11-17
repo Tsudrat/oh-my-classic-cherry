@@ -66,6 +66,7 @@ patchedDependencies:
   '@ai-sdk/google@3.0.146': 'patches/@ai-sdk__google@3.0.146.patch'
   '@ai-sdk/anthropic@3.0.142': 'patches/@ai-sdk__anthropic@3.0.142.patch'
   '@cherrystudio/embedjs-loader-web@0.1.31': 'patches/@cherrystudio__embedjs-loader-web@0.1.31.patch'
+  '@cherrystudio/embedjs@0.1.31': patches/@cherrystudio__embedjs@0.1.31.patch
 
 allowBuilds:
   '@j178/prek': true

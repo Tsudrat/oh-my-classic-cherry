@@ -1,0 +1,39 @@
+diff --git a/src/util/mime.js b/src/util/mime.js
+index 57bdc1884b3d725dde5b84fa7b0637be96a2c8de..e47ae3727641c156adb62f80f3d76bc68a4bd79e 100644
+--- a/src/util/mime.js
++++ b/src/util/mime.js
+@@ -7,19 +7,11 @@ export async function createLoaderFromMimeType(loaderData, mimeType, chunkSize,
+     switch (mimeType) {
+         case 'application/msword':
+         case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': {
+-            const { DocxLoader } = await import('@cherrystudio/embedjs-loader-msoffice').catch(() => {
+-                throw new Error('Package `@cherrystudio/embedjs-loader-msoffice` needs to be installed to load docx files');
+-            });
+-            createDebugMessages('embedjs:util:createLoaderFromMimeType')('Dynamically imported DocxLoader');
+-            return new DocxLoader({ filePathOrUrl: loaderData, chunkSize, chunkOverlap });
++            throw new Error('Office documents (doc/docx/xls/xlsx/pptx) are not supported in this build');
+         }
+         case 'application/vnd.ms-excel':
+         case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {
+-            const { ExcelLoader } = await import('@cherrystudio/embedjs-loader-msoffice').catch(() => {
+-                throw new Error('Package `@cherrystudio/embedjs-loader-msoffice` needs to be installed to load excel files');
+-            });
+-            createDebugMessages('embedjs:util:createLoaderFromMimeType')('Dynamically imported ExcelLoader');
+-            return new ExcelLoader({ filePathOrUrl: loaderData, chunkSize, chunkOverlap });
++            throw new Error('Office documents (doc/docx/xls/xlsx/pptx) are not supported in this build');
+         }
+         case 'application/pdf': {
+             const { PdfLoader } = await import('@cherrystudio/embedjs-loader-pdf').catch(() => {
+@@ -29,11 +21,7 @@ export async function createLoaderFromMimeType(loaderData, mimeType, chunkSize,
+             return new PdfLoader({ filePathOrUrl: loaderData, chunkSize, chunkOverlap });
+         }
+         case 'application/vnd.openxmlformats-officedocument.presentationml.presentation': {
+-            const { PptLoader } = await import('@cherrystudio/embedjs-loader-msoffice').catch(() => {
+-                throw new Error('Package `@cherrystudio/embedjs-loader-msoffice` needs to be installed to load pptx files');
+-            });
+-            createDebugMessages('embedjs:util:createLoaderFromMimeType')('Dynamically imported PptLoader');
+-            return new PptLoader({ filePathOrUrl: loaderData, chunkSize, chunkOverlap });
++            throw new Error('Office documents (doc/docx/xls/xlsx/pptx) are not supported in this build');
+         }
+         case 'text/plain': {
+             const fineType = mime.getType(loaderData);

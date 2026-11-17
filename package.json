@@ -134,7 +134,6 @@
     "@cherrystudio/embedjs-loader-csv": "0.1.31",
     "@cherrystudio/embedjs-loader-image": "0.1.31",
     "@cherrystudio/embedjs-loader-markdown": "0.1.31",
-    "@cherrystudio/embedjs-loader-msoffice": "0.1.31",
     "@cherrystudio/embedjs-loader-pdf": "0.1.31",
     "@cherrystudio/embedjs-loader-sitemap": "0.1.31",
     "@cherrystudio/embedjs-loader-web": "0.1.31",
