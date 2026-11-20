@@ -10,10 +10,10 @@ repos:
         files: '\.(js|jsx|ts|tsx|cjs|mjs|cts|mts)$'
         pass_filenames: true
 
-      - id: eslint-fix
-        name: ESLint fix
+      - id: oxlint-fix
+        name: oxlint fix
         language: system
-        entry: pnpm eslint --fix
+        entry: pnpm oxlint --fix
         files: '\.(js|jsx|ts|tsx|cjs|mjs|cts|mts)$'
         pass_filenames: true
 

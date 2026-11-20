@@ -148,12 +148,12 @@ Never `console.log` for app logging.
 
 ## Tech Stack (summary)
 
-Electron · React 19 · TypeScript · Ant Design 5 · Redux Toolkit · Dexie · Vercel AI SDK (`ai` + `@cherrystudio/ai-core`) · electron-vite · Vitest · ESLint / oxlint / Biome · i18next
+Electron · React 19 · TypeScript · Ant Design 5 · Redux Toolkit · Dexie · Vercel AI SDK (`ai` + `@cherrystudio/ai-core`) · electron-vite · Vitest · oxlint / Biome · i18next
 
 ## Conventions
 
 - **TypeScript**: strict; `tsgo`; `tsconfig.node.json` / `tsconfig.web.json`
-- **Style**: Biome (2-space, single quotes); oxlint + ESLint; `simple-import-sort`
+- **Style**: Biome (2-space, single quotes); oxlint (incl. jsPlugins) + Biome; `simple-import-sort`
 - **Files**: components `PascalCase.tsx`; utils/hooks `camelCase.ts`; tests `*.test.ts` / `*.spec.ts`
 - **i18n**: no hardcoded UI strings; locales under `src/renderer/src/i18n/`
 - **Patches**: check `patches/` before upgrading listed dependencies
