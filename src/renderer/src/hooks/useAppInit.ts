@@ -45,7 +45,7 @@ export function useAppInit() {
 
   useEffect(() => {
     document.getElementById('spinner')?.remove()
-    // eslint-disable-next-line no-restricted-syntax
+    // oxlint-disable-next-line no-console
     console.timeEnd('init')
 
     // Initialize MemoryService after app is ready

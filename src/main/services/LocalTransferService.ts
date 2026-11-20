@@ -25,6 +25,7 @@ class LocalTransferService {
   private lastUpdatedAt = Date.now()
   private lastError?: string
 
+  // oxlint-disable-next-line no-empty-function -- private constructor enforces the singleton
   private constructor() {}
 
   public static getInstance(): LocalTransferService {

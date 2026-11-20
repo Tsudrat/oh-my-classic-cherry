@@ -218,7 +218,9 @@ const NotesPage: FC = () => {
             try {
               await window.api.file.deleteExternalFile(targetPath).catch(() => {})
               await window.api.file.deleteExternalDir(targetPath).catch(() => {})
-            } catch {}
+            } catch {
+              // best-effort cleanup
+            }
             return
           }
           // 若目标路径是刚被重建的同路径笔记，旧内容已覆盖新文件，需恢复正确内容；
@@ -232,7 +234,9 @@ const NotesPage: FC = () => {
                 try {
                   await window.api.file.deleteExternalFile(targetPath).catch(() => {})
                   await window.api.file.deleteExternalDir(targetPath).catch(() => {})
-                } catch {}
+                } catch {
+                  // best-effort cleanup
+                }
                 return
               }
               const curLastPath = lastFilePathRef.current ? normalizePathValue(lastFilePathRef.current) : undefined
@@ -253,7 +257,9 @@ const NotesPage: FC = () => {
           try {
             await window.api.file.deleteExternalFile(targetPath).catch(() => {})
             await window.api.file.deleteExternalDir(targetPath).catch(() => {})
-          } catch {}
+          } catch {
+            // best-effort cleanup
+          }
           return
         }
         // 非过期写入，但若在此次写入等待期间该路径被标记为待删除（generation 未变但标记已设置），也需清理
@@ -261,7 +267,9 @@ const NotesPage: FC = () => {
           try {
             await window.api.file.deleteExternalFile(targetPath).catch(() => {})
             await window.api.file.deleteExternalDir(targetPath).catch(() => {})
-          } catch {}
+          } catch {
+            // best-effort cleanup
+          }
           return
         }
         // 保存后立即刷新缓存，确保下次读取时获取最新内容

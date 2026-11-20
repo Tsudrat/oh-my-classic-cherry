@@ -133,285 +133,287 @@ const findRangesInTarget = (
   return ranges
 }
 
-// eslint-disable-next-line @eslint-react/no-forward-ref
-export const ContentSearch = React.forwardRef<ContentSearchRef, Props>(
-  (
-    { searchTarget, filter, includeUser = false, onIncludeUserChange, showUserToggle = true, positionMode = 'fixed' },
-    ref
-  ) => {
-    const target: HTMLElement | null = (() => {
-      if (searchTarget instanceof HTMLElement) {
-        return searchTarget
-      } else {
-        return (searchTarget.current as HTMLElement) ?? null
-      }
-    })()
-    const containerRef = React.useRef<HTMLDivElement>(null)
-    const searchInputRef = React.useRef<HTMLInputElement>(null)
-    const [enableContentSearch, setEnableContentSearch] = useState(false)
-    const [searchCompleted, setSearchCompleted] = useState(SearchCompletedState.NotSearched)
-    const [isCaseSensitive, setIsCaseSensitive] = useState(false)
-    const [isWholeWord, setIsWholeWord] = useState(false)
-    const [allRanges, setAllRanges] = useState<Range[]>([])
-    const [currentIndex, setCurrentIndex] = useState(-1)
-    const prevSearchText = useRef('')
-    const { t } = useTranslation()
+export const ContentSearch = ({
+  ref,
+  searchTarget,
+  filter,
+  includeUser = false,
+  onIncludeUserChange,
+  showUserToggle = true,
+  positionMode = 'fixed'
+}: Props & { ref?: React.RefObject<ContentSearchRef | null> }) => {
+  const target: HTMLElement | null = (() => {
+    if (searchTarget instanceof HTMLElement) {
+      return searchTarget
+    } else {
+      return (searchTarget.current as HTMLElement) ?? null
+    }
+  })()
+  const containerRef = React.useRef<HTMLDivElement>(null)
+  const searchInputRef = React.useRef<HTMLInputElement>(null)
+  const [enableContentSearch, setEnableContentSearch] = useState(false)
+  const [searchCompleted, setSearchCompleted] = useState(SearchCompletedState.NotSearched)
+  const [isCaseSensitive, setIsCaseSensitive] = useState(false)
+  const [isWholeWord, setIsWholeWord] = useState(false)
+  const [allRanges, setAllRanges] = useState<Range[]>([])
+  const [currentIndex, setCurrentIndex] = useState(-1)
+  const prevSearchText = useRef('')
+  const { t } = useTranslation()
 
-    const resetSearch = useCallback(() => {
+  const resetSearch = useCallback(() => {
+    CSS.highlights.clear()
+    setAllRanges([])
+    setSearchCompleted(SearchCompletedState.NotSearched)
+  }, [])
+
+  const locateByIndex = useCallback(
+    (shouldScroll = true) => {
+      // 清理旧的高亮
       CSS.highlights.clear()
-      setAllRanges([])
-      setSearchCompleted(SearchCompletedState.NotSearched)
-    }, [])
 
-    const locateByIndex = useCallback(
-      (shouldScroll = true) => {
-        // 清理旧的高亮
+      if (allRanges.length > 0) {
+        // 1. 创建并注册所有匹配项的高亮
+        const allMatchesHighlight = new Highlight(...allRanges)
+        CSS.highlights.set('search-matches', allMatchesHighlight)
+
+        // 2. 如果有当前项，为其创建并注册一个特殊的高亮
+        if (currentIndex !== -1 && allRanges[currentIndex]) {
+          const currentMatchRange = allRanges[currentIndex]
+          const currentMatchHighlight = new Highlight(currentMatchRange)
+          CSS.highlights.set('current-match', currentMatchHighlight)
+
+          // 3. 将当前项滚动到视图中
+          // 获取第一个文本节点的父元素来进行滚动
+          const parentElement = currentMatchRange.startContainer.parentElement
+          if (shouldScroll && parentElement) {
+            // 优先在指定的滚动容器内滚动，避免滚动整个页面导致索引错乱/看起来"跳到第一条"
+            scrollElementIntoView(parentElement, target)
+          }
+        }
+      }
+    },
+    [allRanges, currentIndex, target]
+  )
+
+  const search = useCallback(
+    (jump = false) => {
+      const searchText = searchInputRef.current?.value.trim() ?? null
+      setSearchCompleted(SearchCompletedState.Searched)
+      if (target && searchText !== null && searchText !== '') {
+        const ranges = findRangesInTarget(target, filter, searchText, isCaseSensitive, isWholeWord)
+        setAllRanges(ranges)
+        setCurrentIndex(jump && ranges.length > 0 ? 0 : -1)
+      }
+    },
+    [target, filter, isCaseSensitive, isWholeWord]
+  )
+
+  const implementation = useMemo(
+    () => ({
+      disable: () => {
+        setEnableContentSearch(false)
         CSS.highlights.clear()
-
+      },
+      enable: (initialText?: string) => {
+        setEnableContentSearch(true)
+        if (searchInputRef.current) {
+          const inputEl = searchInputRef.current
+          if (initialText && initialText.trim().length > 0) {
+            inputEl.value = initialText
+            requestAnimationFrame(() => {
+              inputEl.focus()
+              inputEl.select()
+              search(false)
+            })
+          } else {
+            requestAnimationFrame(() => {
+              inputEl.focus()
+              inputEl.select()
+            })
+          }
+        }
+      },
+      searchNext: () => {
         if (allRanges.length > 0) {
-          // 1. 创建并注册所有匹配项的高亮
-          const allMatchesHighlight = new Highlight(...allRanges)
-          CSS.highlights.set('search-matches', allMatchesHighlight)
-
-          // 2. 如果有当前项，为其创建并注册一个特殊的高亮
-          if (currentIndex !== -1 && allRanges[currentIndex]) {
-            const currentMatchRange = allRanges[currentIndex]
-            const currentMatchHighlight = new Highlight(currentMatchRange)
-            CSS.highlights.set('current-match', currentMatchHighlight)
-
-            // 3. 将当前项滚动到视图中
-            // 获取第一个文本节点的父元素来进行滚动
-            const parentElement = currentMatchRange.startContainer.parentElement
-            if (shouldScroll && parentElement) {
-              // 优先在指定的滚动容器内滚动，避免滚动整个页面导致索引错乱/看起来"跳到第一条"
-              scrollElementIntoView(parentElement, target)
-            }
-          }
+          setCurrentIndex((prev) => (prev < allRanges.length - 1 ? prev + 1 : 0))
         }
       },
-      [allRanges, currentIndex, target]
-    )
-
-    const search = useCallback(
-      (jump = false) => {
-        const searchText = searchInputRef.current?.value.trim() ?? null
-        setSearchCompleted(SearchCompletedState.Searched)
-        if (target && searchText !== null && searchText !== '') {
-          const ranges = findRangesInTarget(target, filter, searchText, isCaseSensitive, isWholeWord)
-          setAllRanges(ranges)
-          setCurrentIndex(jump && ranges.length > 0 ? 0 : -1)
+      searchPrev: () => {
+        if (allRanges.length > 0) {
+          setCurrentIndex((prev) => (prev > 0 ? prev - 1 : allRanges.length - 1))
         }
       },
-      [target, filter, isCaseSensitive, isWholeWord]
-    )
+      resetSearchState: () => {
+        setSearchCompleted(SearchCompletedState.NotSearched)
+      },
+      search: () => {
+        search(true)
+        locateByIndex(true)
+      },
+      silentSearch: () => {
+        search(false)
+        locateByIndex(false)
+      },
+      focus: () => {
+        searchInputRef.current?.focus()
+      }
+    }),
+    [allRanges.length, locateByIndex, search]
+  )
 
-    const implementation = useMemo(
-      () => ({
-        disable: () => {
-          setEnableContentSearch(false)
-          CSS.highlights.clear()
-        },
-        enable: (initialText?: string) => {
-          setEnableContentSearch(true)
-          if (searchInputRef.current) {
-            const inputEl = searchInputRef.current
-            if (initialText && initialText.trim().length > 0) {
-              inputEl.value = initialText
-              requestAnimationFrame(() => {
-                inputEl.focus()
-                inputEl.select()
-                search(false)
-              })
-            } else {
-              requestAnimationFrame(() => {
-                inputEl.focus()
-                inputEl.select()
-              })
-            }
-          }
-        },
-        searchNext: () => {
-          if (allRanges.length > 0) {
-            setCurrentIndex((prev) => (prev < allRanges.length - 1 ? prev + 1 : 0))
-          }
-        },
-        searchPrev: () => {
-          if (allRanges.length > 0) {
-            setCurrentIndex((prev) => (prev > 0 ? prev - 1 : allRanges.length - 1))
-          }
-        },
-        resetSearchState: () => {
-          setSearchCompleted(SearchCompletedState.NotSearched)
-        },
-        search: () => {
-          search(true)
-          locateByIndex(true)
-        },
-        silentSearch: () => {
-          search(false)
-          locateByIndex(false)
-        },
-        focus: () => {
-          searchInputRef.current?.focus()
-        }
-      }),
-      [allRanges.length, locateByIndex, search]
-    )
+  const _searchHandlerDebounce = useMemo(() => debounce(implementation.search, 300), [implementation.search])
 
-    const _searchHandlerDebounce = useMemo(() => debounce(implementation.search, 300), [implementation.search])
+  const searchHandler = useCallback(() => {
+    _searchHandlerDebounce()
+  }, [_searchHandlerDebounce])
 
-    const searchHandler = useCallback(() => {
-      _searchHandlerDebounce()
-    }, [_searchHandlerDebounce])
+  const userInputHandler = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value.trim()
+      if (value.length === 0) {
+        resetSearch()
+      } else {
+        searchHandler()
+      }
+      prevSearchText.current = value
+    },
+    [searchHandler, resetSearch]
+  )
 
-    const userInputHandler = useCallback(
-      (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value.trim()
+  const keyDownHandler = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+        event.preventDefault()
+        const value = (event.target as HTMLInputElement).value.trim()
         if (value.length === 0) {
           resetSearch()
+          return
+        }
+        if (event.shiftKey) {
+          implementation.searchPrev()
         } else {
-          searchHandler()
+          implementation.searchNext()
         }
-        prevSearchText.current = value
-      },
-      [searchHandler, resetSearch]
-    )
-
-    const keyDownHandler = useCallback(
-      (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-          event.preventDefault()
-          const value = (event.target as HTMLInputElement).value.trim()
-          if (value.length === 0) {
-            resetSearch()
-            return
-          }
-          if (event.shiftKey) {
-            implementation.searchPrev()
-          } else {
-            implementation.searchNext()
-          }
-        } else if (event.key === 'Escape') {
-          event.stopPropagation()
-          implementation.disable()
-        }
-      },
-      [implementation, resetSearch]
-    )
-
-    const searchInputFocus = useCallback(() => {
-      requestAnimationFrame(() => searchInputRef.current?.focus())
-    }, [])
-
-    const userOutlinedButtonOnClick = useCallback(() => {
-      onIncludeUserChange?.(!includeUser)
-      searchInputFocus()
-    }, [includeUser, onIncludeUserChange, searchInputFocus])
-
-    useImperativeHandle(ref, () => implementation, [implementation])
-
-    useEffect(() => {
-      locateByIndex()
-    }, [currentIndex, locateByIndex])
-
-    useEffect(() => {
-      if (enableContentSearch && searchInputRef.current?.value.trim()) {
-        search(true)
+      } else if (event.key === 'Escape') {
+        event.stopPropagation()
+        implementation.disable()
       }
-    }, [isCaseSensitive, isWholeWord, enableContentSearch, search])
+    },
+    [implementation, resetSearch]
+  )
 
-    const prevButtonOnClick = () => {
-      implementation.searchPrev()
-      searchInputFocus()
+  const searchInputFocus = useCallback(() => {
+    requestAnimationFrame(() => searchInputRef.current?.focus())
+  }, [])
+
+  const userOutlinedButtonOnClick = useCallback(() => {
+    onIncludeUserChange?.(!includeUser)
+    searchInputFocus()
+  }, [includeUser, onIncludeUserChange, searchInputFocus])
+
+  useImperativeHandle(ref, () => implementation, [implementation])
+
+  useEffect(() => {
+    locateByIndex()
+  }, [currentIndex, locateByIndex])
+
+  useEffect(() => {
+    if (enableContentSearch && searchInputRef.current?.value.trim()) {
+      search(true)
     }
+  }, [isCaseSensitive, isWholeWord, enableContentSearch, search])
 
-    const nextButtonOnClick = () => {
-      implementation.searchNext()
-      searchInputFocus()
-    }
-
-    const closeButtonOnClick = () => {
-      implementation.disable()
-    }
-
-    const caseSensitiveButtonOnClick = () => {
-      setIsCaseSensitive(!isCaseSensitive)
-      searchInputFocus()
-    }
-
-    const wholeWordButtonOnClick = () => {
-      setIsWholeWord(!isWholeWord)
-      searchInputFocus()
-    }
-
-    return (
-      <Container
-        ref={containerRef}
-        style={enableContentSearch ? {} : { display: 'none' }}
-        $overlayPosition={positionMode === 'absolute' ? 'absolute' : 'static'}>
-        <NarrowLayout style={{ width: '100%' }}>
-          <SearchBarContainer $position={positionMode}>
-            <InputWrapper>
-              <Input
-                ref={searchInputRef}
-                onInput={userInputHandler}
-                onKeyDown={keyDownHandler}
-                placeholder={t('chat.assistant.search.placeholder')}
-                style={{ lineHeight: '20px' }}
-              />
-              <ToolBar>
-                {showUserToggle && (
-                  <Tooltip title={t('button.includes_user_questions')} mouseEnterDelay={0.8} placement="bottom">
-                    <ActionIconButton onClick={userOutlinedButtonOnClick}>
-                      <User size={18} style={{ color: includeUser ? 'var(--color-link)' : 'var(--color-icon)' }} />
-                    </ActionIconButton>
-                  </Tooltip>
-                )}
-                <Tooltip title={t('button.case_sensitive')} mouseEnterDelay={0.8} placement="bottom">
-                  <ActionIconButton onClick={caseSensitiveButtonOnClick}>
-                    <CaseSensitive
-                      size={18}
-                      style={{ color: isCaseSensitive ? 'var(--color-link)' : 'var(--color-icon)' }}
-                    />
-                  </ActionIconButton>
-                </Tooltip>
-                <Tooltip title={t('button.whole_word')} mouseEnterDelay={0.8} placement="bottom">
-                  <ActionIconButton onClick={wholeWordButtonOnClick}>
-                    <WholeWord size={18} style={{ color: isWholeWord ? 'var(--color-link)' : 'var(--color-icon)' }} />
-                  </ActionIconButton>
-                </Tooltip>
-              </ToolBar>
-            </InputWrapper>
-            <Separator></Separator>
-            <SearchResults>
-              {searchCompleted !== SearchCompletedState.NotSearched && allRanges.length > 0 ? (
-                <>
-                  <SearchResultCount>{currentIndex + 1}</SearchResultCount>
-                  <SearchResultSeparator>/</SearchResultSeparator>
-                  <SearchResultTotalCount>{allRanges.length}</SearchResultTotalCount>
-                </>
-              ) : (
-                <SearchResultsPlaceholder>0/0</SearchResultsPlaceholder>
-              )}
-            </SearchResults>
-            <ToolBar>
-              <ActionIconButton onClick={prevButtonOnClick} disabled={allRanges.length === 0}>
-                <ChevronUp size={18} />
-              </ActionIconButton>
-              <ActionIconButton onClick={nextButtonOnClick} disabled={allRanges.length === 0}>
-                <ChevronDown size={18} />
-              </ActionIconButton>
-              <ActionIconButton onClick={closeButtonOnClick}>
-                <X size={18} />
-              </ActionIconButton>
-            </ToolBar>
-          </SearchBarContainer>
-        </NarrowLayout>
-        <Placeholder />
-      </Container>
-    )
+  const prevButtonOnClick = () => {
+    implementation.searchPrev()
+    searchInputFocus()
   }
-)
+
+  const nextButtonOnClick = () => {
+    implementation.searchNext()
+    searchInputFocus()
+  }
+
+  const closeButtonOnClick = () => {
+    implementation.disable()
+  }
+
+  const caseSensitiveButtonOnClick = () => {
+    setIsCaseSensitive(!isCaseSensitive)
+    searchInputFocus()
+  }
+
+  const wholeWordButtonOnClick = () => {
+    setIsWholeWord(!isWholeWord)
+    searchInputFocus()
+  }
+
+  return (
+    <Container
+      ref={containerRef}
+      style={enableContentSearch ? {} : { display: 'none' }}
+      $overlayPosition={positionMode === 'absolute' ? 'absolute' : 'static'}>
+      <NarrowLayout style={{ width: '100%' }}>
+        <SearchBarContainer $position={positionMode}>
+          <InputWrapper>
+            <Input
+              ref={searchInputRef}
+              onInput={userInputHandler}
+              onKeyDown={keyDownHandler}
+              placeholder={t('chat.assistant.search.placeholder')}
+              style={{ lineHeight: '20px' }}
+            />
+            <ToolBar>
+              {showUserToggle && (
+                <Tooltip title={t('button.includes_user_questions')} mouseEnterDelay={0.8} placement="bottom">
+                  <ActionIconButton onClick={userOutlinedButtonOnClick}>
+                    <User size={18} style={{ color: includeUser ? 'var(--color-link)' : 'var(--color-icon)' }} />
+                  </ActionIconButton>
+                </Tooltip>
+              )}
+              <Tooltip title={t('button.case_sensitive')} mouseEnterDelay={0.8} placement="bottom">
+                <ActionIconButton onClick={caseSensitiveButtonOnClick}>
+                  <CaseSensitive
+                    size={18}
+                    style={{ color: isCaseSensitive ? 'var(--color-link)' : 'var(--color-icon)' }}
+                  />
+                </ActionIconButton>
+              </Tooltip>
+              <Tooltip title={t('button.whole_word')} mouseEnterDelay={0.8} placement="bottom">
+                <ActionIconButton onClick={wholeWordButtonOnClick}>
+                  <WholeWord size={18} style={{ color: isWholeWord ? 'var(--color-link)' : 'var(--color-icon)' }} />
+                </ActionIconButton>
+              </Tooltip>
+            </ToolBar>
+          </InputWrapper>
+          <Separator></Separator>
+          <SearchResults>
+            {searchCompleted !== SearchCompletedState.NotSearched && allRanges.length > 0 ? (
+              <>
+                <SearchResultCount>{currentIndex + 1}</SearchResultCount>
+                <SearchResultSeparator>/</SearchResultSeparator>
+                <SearchResultTotalCount>{allRanges.length}</SearchResultTotalCount>
+              </>
+            ) : (
+              <SearchResultsPlaceholder>0/0</SearchResultsPlaceholder>
+            )}
+          </SearchResults>
+          <ToolBar>
+            <ActionIconButton onClick={prevButtonOnClick} disabled={allRanges.length === 0}>
+              <ChevronUp size={18} />
+            </ActionIconButton>
+            <ActionIconButton onClick={nextButtonOnClick} disabled={allRanges.length === 0}>
+              <ChevronDown size={18} />
+            </ActionIconButton>
+            <ActionIconButton onClick={closeButtonOnClick}>
+              <X size={18} />
+            </ActionIconButton>
+          </ToolBar>
+        </SearchBarContainer>
+      </NarrowLayout>
+      <Placeholder />
+    </Container>
+  )
+}
 
 ContentSearch.displayName = 'ContentSearch'
 

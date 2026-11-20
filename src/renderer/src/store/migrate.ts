@@ -630,7 +630,7 @@ const migrateConfig = {
     try {
       state.assistants.defaultAssistant.type = 'assistant'
 
-      // @ts-ignore
+      // @ts-ignore - legacy persisted-state shape
       state.agents.agents.forEach((agent) => {
         agent.type = 'agent'
         // @ts-ignore eslint-disable-next-line
@@ -1128,7 +1128,7 @@ const migrateConfig = {
         }
       })
 
-      // @ts-ignore
+      // @ts-ignore - legacy persisted-state shape
       state.agents.agents.forEach((agent) => {
         const leadingEmoji = getLeadingEmoji(agent.name)
         if (leadingEmoji) {
@@ -1647,7 +1647,7 @@ const migrateConfig = {
   },
   '108': (state: RootState) => {
     try {
-      // @ts-ignore
+      // @ts-ignore - legacy persisted-state shape
       state.inputTools.toolOrder = DEFAULT_TOOL_ORDER
       state.inputTools.isCollapsed = false
       return state
@@ -1927,20 +1927,20 @@ const migrateConfig = {
     try {
       const { toolOrder } = state.inputTools
       const urlContextKey = 'url_context'
-      // @ts-ignore
+      // @ts-ignore - legacy persisted-state shape
       if (!toolOrder.visible.includes(urlContextKey)) {
-        // @ts-ignore
+        // @ts-ignore - legacy persisted-state shape
         const webSearchIndex = toolOrder.visible.indexOf('web_search')
-        // @ts-ignore
+        // @ts-ignore - legacy persisted-state shape
         const knowledgeBaseIndex = toolOrder.visible.indexOf('knowledge_base')
         if (webSearchIndex !== -1) {
-          // @ts-ignore
+          // @ts-ignore - legacy persisted-state shape
           toolOrder.visible.splice(webSearchIndex, 0, urlContextKey)
         } else if (knowledgeBaseIndex !== -1) {
-          // @ts-ignore
+          // @ts-ignore - legacy persisted-state shape
           toolOrder.visible.splice(knowledgeBaseIndex, 0, urlContextKey)
         } else {
-          // @ts-ignore
+          // @ts-ignore - legacy persisted-state shape
           toolOrder.visible.push(urlContextKey)
         }
       }
@@ -2336,7 +2336,7 @@ const migrateConfig = {
   },
   '140': (state: RootState) => {
     try {
-      // @ts-ignore
+      // @ts-ignore - legacy persisted-state shape
       state.paintings = {
         // @ts-ignore paintings
         siliconflow_paintings: state?.paintings?.paintings || [],
@@ -2600,7 +2600,7 @@ const migrateConfig = {
         }
       })
 
-      // @ts-ignore
+      // @ts-ignore - legacy persisted-state shape
       state.agents.agents.forEach((agent) => {
         // @ts-ignore model is not defined in Agent
         if (agent.model?.provider === 'cherryin') {
@@ -2732,11 +2732,11 @@ const migrateConfig = {
       }
 
       // Migrate agents to assistants presets
-      // @ts-ignore
+      // @ts-ignore - legacy persisted-state shape
       if (state?.agents?.agents) {
-        // @ts-ignore
+        // @ts-ignore - legacy persisted-state shape
         state.assistants.presets = [...state.agents.agents]
-        // @ts-ignore
+        // @ts-ignore - legacy persisted-state shape
         delete state.agents.agents
       }
 
@@ -2846,14 +2846,14 @@ const migrateConfig = {
   '175': (state: RootState) => {
     try {
       state.assistants.assistants.forEach((assistant) => {
-        // @ts-ignore
+        // @ts-ignore - legacy persisted-state shape
         if (assistant.settings?.reasoning_effort === 'off') {
-          // @ts-ignore
+          // @ts-ignore - legacy persisted-state shape
           assistant.settings.reasoning_effort = 'none'
         }
-        // @ts-ignore
+        // @ts-ignore - legacy persisted-state shape
         if (assistant.settings?.reasoning_effort_cache === 'off') {
-          // @ts-ignore
+          // @ts-ignore - legacy persisted-state shape
           assistant.settings.reasoning_effort_cache = 'none'
         }
       })
@@ -2939,7 +2939,7 @@ const migrateConfig = {
             model.provider = SystemProviderIds.gateway
           }
         })
-        // @ts-ignore
+        // @ts-ignore - legacy persisted-state shape
         if (provider.type === 'ai-gateway') {
           provider.type = 'gateway'
         }
@@ -3085,14 +3085,14 @@ const migrateConfig = {
   '189': (state: RootState) => {
     try {
       void window.api.memory.migrateMemoryDb()
-      // @ts-ignore
+      // @ts-ignore - legacy persisted-state shape
       const memoryLlmApiClient = state?.memory?.memoryConfig?.llmApiClient
-      // @ts-ignore
+      // @ts-ignore - legacy persisted-state shape
       const memoryEmbeddingApiClient = state?.memory?.memoryConfig?.embedderApiClient
 
       if (memoryLlmApiClient) {
         state.memory.memoryConfig.llmModel = getModel(memoryLlmApiClient.model, memoryLlmApiClient.provider)
-        // @ts-ignore
+        // @ts-ignore - legacy persisted-state shape
         delete state.memory.memoryConfig.llmApiClient
       }
 
@@ -3101,7 +3101,7 @@ const migrateConfig = {
           memoryEmbeddingApiClient.model,
           memoryEmbeddingApiClient.provider
         )
-        // @ts-ignore
+        // @ts-ignore - legacy persisted-state shape
         delete state.memory.memoryConfig.embedderApiClient
       }
       return state
