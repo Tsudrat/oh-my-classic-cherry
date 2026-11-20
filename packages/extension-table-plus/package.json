@@ -1,14 +1,26 @@
 {
   "name": "@cherrystudio/extension-table-plus",
-  "description": "table extension for tiptap forked from tiptap/extension-table",
   "version": "3.0.12",
-  "homepage": "https://cherry-ai.com",
+  "description": "table extension for tiptap forked from tiptap/extension-table",
   "keywords": [
     "tiptap",
     "tiptap extension"
   ],
+  "homepage": "https://cherry-ai.com",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CherryHQ/cherry-studio",
+    "directory": "packages/extension-table-plus"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
   "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": {
@@ -59,13 +71,11 @@
       "require": "./dist/row/index.cjs"
     }
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "src",
-    "dist"
-  ],
+  "scripts": {
+    "build": "tsdown",
+    "lint": "oxfmt --write ./src/ && oxlint --fix ./src/",
+    "prepublishOnly": "pnpm build"
+  },
   "devDependencies": {
     "@tiptap/core": "3.2.0",
     "@tiptap/pm": "3.2.0",
@@ -74,16 +84,6 @@
   "peerDependencies": {
     "@tiptap/core": "^3.0.9",
     "@tiptap/pm": "^3.0.9"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/CherryHQ/cherry-studio",
-    "directory": "packages/extension-table-plus"
-  },
-  "scripts": {
-    "build": "tsdown",
-    "lint": "oxfmt --write ./src/ && oxlint --fix ./src/",
-    "prepublishOnly": "pnpm build"
   },
   "packageManager": "pnpm@10.27.0"
 }
