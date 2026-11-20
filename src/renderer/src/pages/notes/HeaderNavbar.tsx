@@ -295,10 +295,10 @@ const HeaderNavbar = ({ notesTree, getCurrentNoteContent, onToggleStar, onExpand
 
 const NavbarIcon = styled(BaseNavbarIcon)`
   svg {
-      color: var(--color-icon);
-      width: 18px;
-      height: 18px;
-    }
+    color: var(--color-icon);
+    width: 18px;
+    height: 18px;
+  }
 `
 
 export const StarButton = styled.div`

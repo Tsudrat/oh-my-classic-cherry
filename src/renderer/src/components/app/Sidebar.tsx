@@ -220,7 +220,6 @@ const Icon = styled.div<{ theme: string }>`
       opacity: 0.1;
     }
   }
-
 `
 
 const StyledLink = styled.div`

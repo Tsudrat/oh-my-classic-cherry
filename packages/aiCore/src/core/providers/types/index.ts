@@ -109,22 +109,21 @@ export interface ProviderVariant<
  */
 export type ExtractProviderIds<TConfig> = TConfig extends { name: infer TName }
   ? TName extends string
-    ?
-        | TName
-        | (TConfig extends { aliases: infer TAliases }
-            ? TAliases extends readonly string[]
-              ? TAliases[number]
-              : never
-            : never)
-        | (TConfig extends { variants: infer TVariants }
-            ? TVariants extends readonly any[]
-              ? TVariants[number] extends { suffix: infer TSuffix }
-                ? TSuffix extends string
-                  ? `${TName}-${TSuffix}`
-                  : never
+    ? | TName
+      | (TConfig extends { aliases: infer TAliases }
+          ? TAliases extends readonly string[]
+            ? TAliases[number]
+            : never
+          : never)
+      | (TConfig extends { variants: infer TVariants }
+          ? TVariants extends readonly any[]
+            ? TVariants[number] extends { suffix: infer TSuffix }
+              ? TSuffix extends string
+                ? `${TName}-${TSuffix}`
                 : never
               : never
-            : never)
+            : never
+          : never)
     : never
   : never
 
@@ -170,10 +169,12 @@ type ExtractVariantIds<TConfig, TName extends string> = TConfig extends {
 
 export type ExtensionConfigToIdResolutionMap<TConfig> = TConfig extends { name: infer TName extends string }
   ? {
-      readonly [K in
-        | TName
-        | (TConfig extends { aliases: readonly (infer TAlias extends string)[] } ? TAlias : never)
-        | ExtractVariantIds<TConfig, TName>]: K extends ExtractVariantIds<TConfig, TName>
+      readonly [
+        K in
+          | TName
+          | (TConfig extends { aliases: readonly (infer TAlias extends string)[] } ? TAlias : never)
+          | ExtractVariantIds<TConfig, TName>
+      ]: K extends ExtractVariantIds<TConfig, TName>
         ? K // 变体 → 自身
         : TName // 基础名和别名 → TName
     }

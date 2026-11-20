@@ -33,7 +33,7 @@ export const OGCard = ({ link, show }: Props) => {
 
   const GeneratedGraph = useCallback(() => {
     return (
-      <div className="bg-accent flex h-48 items-center justify-center p-4">
+      <div className="flex h-48 items-center justify-center bg-accent p-4">
         <h2 className="text-2xl font-bold">{metadata['og:title'] || hostname}</h2>
       </div>
     )
