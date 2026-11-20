@@ -12,7 +12,9 @@
   "bracketSameLine": true,
   "bracketSpacing": true,
   "singleAttributePerLine": false,
-  "sortPackageJson": false,
+  "sortPackageJson": {
+    "sortScripts": true
+  },
   "ignorePatterns": [
     "**/.claude/**",
     "**/.vscode/**",
