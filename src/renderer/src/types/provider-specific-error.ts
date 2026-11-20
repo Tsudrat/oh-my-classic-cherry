@@ -5,7 +5,7 @@ const marker = `vercel.ai.error.${name}`
 const symbol = Symbol.for(marker)
 
 export class ProviderSpecificError extends AISDKError {
-  // @ts-ignore
+  // @ts-ignore - symbol property required by AISDKError.isInstance
   private readonly [symbol] = true // used in isInstance
 
   readonly provider: string
