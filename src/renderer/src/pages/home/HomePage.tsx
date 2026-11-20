@@ -105,7 +105,7 @@ const HomePage: FC = () => {
   useEffect(() => {
     state?.assistant && setActiveAssistant(state?.assistant)
     state?.topic && setActiveTopic(state?.topic)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
 
   useEffect(() => {

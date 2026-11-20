@@ -241,7 +241,7 @@ const Messages: React.FC<MessagesProps> = ({ assistant, topic, setActiveTopic, o
     ]
 
     return () => unsubscribes.forEach((unsub) => unsub())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [assistant, dispatch, scrollToBottom, topic, isProcessingContext])
 
   useEffect(() => {

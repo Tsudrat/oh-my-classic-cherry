@@ -182,7 +182,7 @@ const McpSettings: React.FC = () => {
     if (currentServerType) {
       setServerType(currentServerType)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [form.getFieldValue('serverType')])
 
   const fetchTools = async () => {
@@ -276,7 +276,7 @@ const McpSettings: React.FC = () => {
       void fetchServerVersion()
       void fetchServerLogs()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [server.id, server.isActive])
 
   useEffect(() => {
@@ -416,7 +416,7 @@ const McpSettings: React.FC = () => {
         window.toast.error(`${t('settings.mcp.deleteError')}: ${error.message}`)
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [server, t]
   )
 

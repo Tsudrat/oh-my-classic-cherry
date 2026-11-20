@@ -397,7 +397,7 @@ const BasicDataSettings: React.FC = () => {
     }
 
     void handleDataMigration()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleOpenPath = (path?: string) => {

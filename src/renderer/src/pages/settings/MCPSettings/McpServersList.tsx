@@ -136,7 +136,7 @@ const McpServersList: FC = () => {
         window.toast.error(`${t('settings.mcp.deleteError')}: ${error.message}`)
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [t]
   )
 

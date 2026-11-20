@@ -376,7 +376,7 @@ const NotesPage: FC = () => {
     }
 
     void initialize()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [notesPath])
 
   // 处理树同步时的状态管理
@@ -549,7 +549,7 @@ const NotesPage: FC = () => {
       lastContentRef.current = ''
       lastFilePathRef.current = undefined
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilePath])
 
   // 获取目标文件夹路径（选中文件夹或根目录）

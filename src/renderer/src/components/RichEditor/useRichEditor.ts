@@ -382,7 +382,7 @@ export const useRichEditor = (options: UseRichEditorOptions = {}): UseRichEditor
         nested: true
       })
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [placeholder, activeShikiTheme, handleLinkHover, handleLinkHoverEnd]
   )
 

@@ -148,7 +148,7 @@ const ModelEditContent: FC<ModelEditContentProps & ModalProps> = ({ provider, mo
       )
       setModelCapabilities(newModelCapabilities)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [showMoreSettings])
 
   // 监听modelCapabilities变化，自动保存（但跳过初始化时的保存）
@@ -156,7 +156,7 @@ const ModelEditContent: FC<ModelEditContentProps & ModalProps> = ({ provider, mo
     if (hasUserModified && showMoreSettings) {
       autoSave()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [modelCapabilities])
 
   const ModelCapability = () => {

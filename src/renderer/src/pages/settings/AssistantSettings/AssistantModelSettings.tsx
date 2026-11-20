@@ -242,7 +242,7 @@ const AssistantModelSettings: FC<Props> = ({ assistant, updateAssistant, updateA
 
   useEffect(() => {
     return () => updateAssistantSettings({ customParameters: customParametersRef.current })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const formatSliderTooltip = (value?: number) => {

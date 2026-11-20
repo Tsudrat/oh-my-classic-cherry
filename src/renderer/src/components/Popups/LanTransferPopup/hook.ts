@@ -362,7 +362,7 @@ export function useLanTransfer(): UseLanTransferReturn {
     return () => {
       void teardownLan()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // ==========================================

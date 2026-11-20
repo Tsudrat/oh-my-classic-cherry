@@ -48,7 +48,7 @@ const ZhipuPage: FC<{ Options: string[] }> = ({ Options }) => {
       setPainting(updatedPainting)
       updatePainting('zhipu_paintings', updatedPainting)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [painting?.id]) // 只在painting的id改变时执行，避免无限循环
 
   const zhipuProvider = providers.find((p) => p.id === 'zhipu')!

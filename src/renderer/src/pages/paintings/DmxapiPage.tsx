@@ -770,7 +770,7 @@ const DmxapiPage: FC<{ Options: string[] }> = ({ Options }) => {
         updatePaintingState({ model: firstModel, priceModel: priceModel })
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadingModels, dynamicModelGroups]) // 依赖模型加载状态
 
   // 当模型切换时，检查是否支持自定义尺寸
