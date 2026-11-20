@@ -11,7 +11,7 @@ export default defineConfig(
   ].map((entry) => ({
     entry: [entry],
     outDir: `dist${entry.replace('src', '').split('/').slice(0, -1).join('/')}`,
-    dts: true,
+    dts: { tsgo: true },
     sourcemap: true,
     format: ['esm' as const, 'cjs' as const],
     external: [/^[^./]/]

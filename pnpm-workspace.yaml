@@ -38,6 +38,17 @@ overrides:
   # Keep every consumer on the single patched version; without this, ^2.0.37
   # resolves to 2.0.41 on re-resolution and the 2.0.37 patch becomes unused.
   '@ai-sdk/openai-compatible': 2.0.37
+  # oxlint JS plugins (@eslint-react / typescript-eslint chain) still require
+  # the classic TypeScript compiler JS API, which typescript@7 removed. Give
+  # them a private TS 5.x copy while the workspace itself runs TS 7: convert
+  # their `typescript` peer into a pinned runtime dependency.
+  '@typescript-eslint/typescript-estree>typescript:peer': '-'
+  '@typescript-eslint/type-utils>typescript:peer': '-'
+  '@typescript-eslint/utils>typescript:peer': '-'
+  '@typescript-eslint/project-service>typescript:peer': '-'
+  '@typescript-eslint/tsconfig-utils>typescript:peer': '-'
+  '@typescript-eslint/parser>typescript:peer': '-'
+  'ts-api-utils>typescript:peer': '-'
   # Provider packages pin @ai-sdk/provider@3.0.8 exactly; keep our ^3.0.8 spec
   # on the same copy so inferred types stay portable (TS2742 otherwise).
   '@ai-sdk/provider@^3.0.8': 3.0.8
@@ -89,3 +100,26 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - '@ai-sdk/google@3.0.146'
+
+packageExtensions:
+  '@typescript-eslint/typescript-estree':
+    dependencies:
+      typescript: ~5.8.3
+  '@typescript-eslint/type-utils':
+    dependencies:
+      typescript: ~5.8.3
+  '@typescript-eslint/utils':
+    dependencies:
+      typescript: ~5.8.3
+  '@typescript-eslint/project-service':
+    dependencies:
+      typescript: ~5.8.3
+  '@typescript-eslint/tsconfig-utils':
+    dependencies:
+      typescript: ~5.8.3
+  '@typescript-eslint/parser':
+    dependencies:
+      typescript: ~5.8.3
+  ts-api-utils:
+    dependencies:
+      typescript: ~5.8.3

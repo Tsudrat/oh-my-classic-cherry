@@ -7,6 +7,6 @@ export default defineConfig({
   outDir: 'dist',
   format: ['esm', 'cjs'],
   clean: true,
-  dts: true,
+  dts: { tsgo: true },
   tsconfig: 'tsconfig.json'
 })

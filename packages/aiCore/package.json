@@ -52,7 +52,7 @@
     "biome": "^0.3.3",
     "oxlint": "^1.93.0",
     "tsdown": "^0.20.3",
-    "typescript": "^5.0.0",
+    "typescript": "^7.0.2",
     "vitest": "^3.2.4"
   },
   "sideEffects": false,
