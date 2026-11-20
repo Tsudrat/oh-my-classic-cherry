@@ -69,8 +69,8 @@
     "test:update": "pnpm test:renderer --update",
     "test:watch": "vitest",
     "typecheck": "pnpm --filter @cherrystudio/ai-sdk-provider build && concurrently -n \"node,web,aicore\" -c \"cyan,magenta,yellow\" \"npm run typecheck:node\" \"npm run typecheck:web\" \"pnpm --filter @cherrystudio/ai-core typecheck\"",
-    "typecheck:node": "tsgo --noEmit -p tsconfig.node.json --composite false",
-    "typecheck:web": "tsgo --noEmit -p tsconfig.web.json --composite false",
+    "typecheck:node": "tsrs --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsrs --noEmit -p tsconfig.web.json --composite false",
     "update:languages": "tsx scripts/update-languages.ts"
   },
   "dependencies": {
@@ -379,7 +379,7 @@
     "tiny-pinyin": "^1.3.2",
     "tokenx": "^1.1.0",
     "ts-morph": "^27.0.2",
-    "tsrs": "7.1.0-beta.tsrs3",
+    "tsrs": "7.1.0-beta.tsrs4",
     "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.8",
     "typescript": "~7.0.2",

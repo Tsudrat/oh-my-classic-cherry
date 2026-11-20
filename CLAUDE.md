@@ -152,7 +152,7 @@ Electron · React 19 · TypeScript · Ant Design 5 · Redux Toolkit · Dexie · 
 
 ## Conventions
 
-- **TypeScript**: strict; `tsgo`; `tsconfig.node.json` / `tsconfig.web.json`
+- **TypeScript**: strict; `tsrs`; `tsconfig.node.json` / `tsconfig.web.json`
 - **Style**: oxfmt (2-space, single quotes); oxlint (incl. jsPlugins); `simple-import-sort`
 - **Files**: components `PascalCase.tsx`; utils/hooks `camelCase.ts`; tests `*.test.ts` / `*.spec.ts`
 - **i18n**: no hardcoded UI strings; locales under `src/renderer/src/i18n/`
