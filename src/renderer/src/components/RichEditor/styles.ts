@@ -47,7 +47,6 @@ export const RichEditorWrapper = styled.div<{
 
   ${({ $minHeight }) => $minHeight && `min-height: ${$minHeight}px;`}
   ${({ $maxHeight }) => $maxHeight && `max-height: ${$maxHeight}px;`}
-
 `
 
 export const ToolbarWrapper = styled.div`

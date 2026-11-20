@@ -579,7 +579,7 @@ const PathText = styled(Typography.Text)`
   vertical-align: middle;
   text-align: right;
   margin-left: 5px;
-  cursor: pointer
+  cursor: pointer;
 `
 
 const PathRow = styled(HStack)`

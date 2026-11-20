@@ -314,9 +314,8 @@ describe('reasoning utils', () => {
     })
 
     it('should handle Qwen models with enable_thinking', async () => {
-      const { isReasoningModel, isSupportedThinkingTokenQwenModel, isQwenReasoningModel } = await import(
-        '@renderer/config/models'
-      )
+      const { isReasoningModel, isSupportedThinkingTokenQwenModel, isQwenReasoningModel } =
+        await import('@renderer/config/models')
 
       vi.mocked(isReasoningModel).mockReturnValue(true)
       vi.mocked(isSupportedThinkingTokenQwenModel).mockReturnValue(true)
@@ -1075,9 +1074,8 @@ describe('reasoning utils', () => {
     })
 
     it('should return reasoning effort for OpenAI models', async () => {
-      const { isReasoningModel, isOpenAIModel, isSupportedReasoningEffortOpenAIModel } = await import(
-        '@renderer/config/models'
-      )
+      const { isReasoningModel, isOpenAIModel, isSupportedReasoningEffortOpenAIModel } =
+        await import('@renderer/config/models')
 
       vi.mocked(isReasoningModel).mockReturnValue(true)
       vi.mocked(isOpenAIModel).mockReturnValue(true)
@@ -1105,9 +1103,8 @@ describe('reasoning utils', () => {
     })
 
     it('should pass reasoningMode from custom parameters for GPT-5.6 Pro mode', async () => {
-      const { isReasoningModel, isOpenAIModel, isSupportedReasoningEffortOpenAIModel } = await import(
-        '@renderer/config/models'
-      )
+      const { isReasoningModel, isOpenAIModel, isSupportedReasoningEffortOpenAIModel } =
+        await import('@renderer/config/models')
 
       vi.mocked(isReasoningModel).mockReturnValue(true)
       vi.mocked(isOpenAIModel).mockReturnValue(true)
@@ -1137,9 +1134,8 @@ describe('reasoning utils', () => {
     })
 
     it('should include reasoning summary when not o1-pro', async () => {
-      const { isReasoningModel, isOpenAIModel, isSupportedReasoningEffortOpenAIModel } = await import(
-        '@renderer/config/models'
-      )
+      const { isReasoningModel, isOpenAIModel, isSupportedReasoningEffortOpenAIModel } =
+        await import('@renderer/config/models')
 
       vi.mocked(isReasoningModel).mockReturnValue(true)
       vi.mocked(isOpenAIModel).mockReturnValue(true)
@@ -1166,9 +1162,8 @@ describe('reasoning utils', () => {
     })
 
     it('should not include reasoning summary for o1-pro', async () => {
-      const { isReasoningModel, isOpenAIDeepResearchModel, isSupportedReasoningEffortOpenAIModel } = await import(
-        '@renderer/config/models'
-      )
+      const { isReasoningModel, isOpenAIDeepResearchModel, isSupportedReasoningEffortOpenAIModel } =
+        await import('@renderer/config/models')
 
       vi.mocked(isReasoningModel).mockReturnValue(true)
       vi.mocked(isOpenAIDeepResearchModel).mockReturnValue(false)
@@ -1495,9 +1490,8 @@ describe('reasoning utils', () => {
     })
 
     it('should use fallback budgetTokens when findTokenLimit returns undefined for Claude model', async () => {
-      const { isReasoningModel, isSupportedThinkingTokenClaudeModel, findTokenLimit } = await import(
-        '@renderer/config/models'
-      )
+      const { isReasoningModel, isSupportedThinkingTokenClaudeModel, findTokenLimit } =
+        await import('@renderer/config/models')
 
       vi.mocked(isReasoningModel).mockReturnValue(true)
       vi.mocked(isSupportedThinkingTokenClaudeModel).mockReturnValue(true)
@@ -1531,9 +1525,8 @@ describe('reasoning utils', () => {
     })
 
     it('should use fallback budgetTokens for non-Claude model on Anthropic endpoint when token limit is unknown', async () => {
-      const { isReasoningModel, isSupportedThinkingTokenClaudeModel, findTokenLimit } = await import(
-        '@renderer/config/models'
-      )
+      const { isReasoningModel, isSupportedThinkingTokenClaudeModel, findTokenLimit } =
+        await import('@renderer/config/models')
 
       vi.mocked(isReasoningModel).mockReturnValue(true)
       vi.mocked(isSupportedThinkingTokenClaudeModel).mockReturnValue(false)
@@ -1568,9 +1561,8 @@ describe('reasoning utils', () => {
     })
 
     it('should produce different fallback budgetTokens for different effort levels', async () => {
-      const { isReasoningModel, isSupportedThinkingTokenClaudeModel, findTokenLimit } = await import(
-        '@renderer/config/models'
-      )
+      const { isReasoningModel, isSupportedThinkingTokenClaudeModel, findTokenLimit } =
+        await import('@renderer/config/models')
 
       vi.mocked(isReasoningModel).mockReturnValue(true)
       vi.mocked(isSupportedThinkingTokenClaudeModel).mockReturnValue(true)
