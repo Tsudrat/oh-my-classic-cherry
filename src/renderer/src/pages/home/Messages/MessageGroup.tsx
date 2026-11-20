@@ -110,7 +110,7 @@ const MessageGroup = ({ messages, topic, registerMessageElement }: Props) => {
     return () => {
       document.removeEventListener('flow-navigate-to-message', handleFlowNavigate as EventListener)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [messages, selectedIndex, isGrouped, messageLength])
 
   // 添加对LOCATE_MESSAGE事件的监听

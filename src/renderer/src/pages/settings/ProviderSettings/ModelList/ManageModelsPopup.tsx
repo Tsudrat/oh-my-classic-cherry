@@ -191,7 +191,7 @@ const PopupContainer: React.FC<Props> = ({ providerId, resolve }) => {
 
   useEffect(() => {
     void loadModels(provider)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

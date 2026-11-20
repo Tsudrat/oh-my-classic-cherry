@@ -140,7 +140,7 @@ export function useAppInit() {
       setQuickModel(model)
       setTranslateModel(model)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

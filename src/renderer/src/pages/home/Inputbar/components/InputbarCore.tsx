@@ -264,7 +264,7 @@ export const InputbarCore: FC<InputbarCoreProps> = ({
     return () => {
       disposeRootTrigger()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [config.enableQuickPanel])
 
   const handleKeyDown = useCallback(

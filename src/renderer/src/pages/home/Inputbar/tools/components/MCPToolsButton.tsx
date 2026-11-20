@@ -394,7 +394,7 @@ const MCPToolsButton: FC<Props> = ({ quickPanel, setInputValue, resizeTextArea, 
       icon: <Hammer />,
       action: () => handlePromptSelect(prompt)
     }))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [activedMcpServers])
 
   const openPromptList = useCallback(async () => {
@@ -482,7 +482,7 @@ const MCPToolsButton: FC<Props> = ({ quickPanel, setInputValue, resizeTextArea, 
     return () => {
       isMounted = false
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [activedMcpServers])
 
   const openResourcesList = useCallback(async () => {

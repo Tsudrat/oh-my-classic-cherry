@@ -112,7 +112,7 @@ const TabsContainer: React.FC<TabsContainerProps> = ({ children }) => {
     if (location.pathname.startsWith('/settings/')) {
       lastSettingsPath = location.pathname
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, location.pathname])
 
   useEffect(() => {

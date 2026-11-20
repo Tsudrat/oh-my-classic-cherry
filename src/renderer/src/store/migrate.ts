@@ -633,7 +633,7 @@ const migrateConfig = {
       // @ts-ignore - legacy persisted-state shape
       state.agents.agents.forEach((agent) => {
         agent.type = 'agent'
-        // @ts-ignore eslint-disable-next-line
+        // @ts-ignore oxlint-disable-next-line
         delete agent.group
       })
 
@@ -642,7 +642,7 @@ const migrateConfig = {
         assistants: {
           ...state.assistants,
           assistants: [...state.assistants.assistants].map((assistant) => {
-            // @ts-ignore eslint-disable-next-line
+            // @ts-ignore oxlint-disable-next-line
             delete assistant.group
             return {
               ...assistant,
@@ -714,7 +714,7 @@ const migrateConfig = {
   },
   '39': (state: RootState) => {
     try {
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       state.settings.codeStyle = 'auto'
       return state
     } catch (error) {
@@ -906,7 +906,7 @@ const migrateConfig = {
 
       state.llm.providers.forEach((provider) => {
         if (provider.id === 'qwenlm') {
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
           provider.type = 'qwenlm'
         }
       })
@@ -964,7 +964,7 @@ const migrateConfig = {
     try {
       state.llm.providers.forEach((provider) => {
         if (provider.id === 'qwenlm') {
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
           provider.type = 'qwenlm'
         }
       })
@@ -1183,7 +1183,7 @@ const migrateConfig = {
       addWebSearchProvider(state, 'exa')
       if (state.websearch) {
         state.websearch.providers.forEach((p) => {
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
           delete p.enabled
         })
       }
@@ -1270,9 +1270,9 @@ const migrateConfig = {
   },
   '85': (state: RootState) => {
     try {
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       state.settings.autoCheckUpdate = !state.settings.manualUpdateCheck
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       delete state.settings.manualUpdateCheck
       state.settings.gridPopoverTrigger = 'click'
       return state
@@ -1335,13 +1335,13 @@ const migrateConfig = {
   },
   '91': (state: RootState) => {
     try {
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       state.settings.codeCacheable = false
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       state.settings.codeCacheMaxSize = 1000
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       state.settings.codeCacheTTL = 15
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       state.settings.codeCacheThreshold = 2
       addProvider(state, 'qiniu')
       return state
@@ -1400,9 +1400,9 @@ const migrateConfig = {
   },
   '96': (state: RootState) => {
     try {
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       state.settings.assistantIconType = state.settings?.showAssistantIcon ? 'model' : 'emoji'
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       delete state.settings.showAssistantIcon
       return state
     } catch (error) {
@@ -1428,7 +1428,7 @@ const migrateConfig = {
     try {
       state.llm.providers.forEach((provider) => {
         if (provider.type === 'openai' && provider.id !== 'openai') {
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
           provider.type = 'openai-compatible'
         }
       })
@@ -1472,7 +1472,7 @@ const migrateConfig = {
   '100': (state: RootState) => {
     try {
       state.llm.providers.forEach((provider) => {
-        // @ts-ignore eslint-disable-next-line
+        // @ts-ignore oxlint-disable-next-line
         if (['openai-compatible', 'openai'].includes(provider.type)) {
           provider.type = 'openai'
         }
@@ -1493,11 +1493,11 @@ const migrateConfig = {
     try {
       state.assistants.assistants.forEach((assistant) => {
         if (assistant.settings) {
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
           if (assistant.settings.enableToolUse) {
-            // @ts-ignore eslint-disable-next-line
+            // @ts-ignore oxlint-disable-next-line
             assistant.settings.toolUseMode = assistant.settings.enableToolUse ? 'function' : 'prompt'
-            // @ts-ignore eslint-disable-next-line
+            // @ts-ignore oxlint-disable-next-line
             delete assistant.settings.enableToolUse
           }
         }
@@ -1538,29 +1538,29 @@ const migrateConfig = {
         autocompletion: true,
         keymap: false
       }
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       state.settings.codePreview = {
         themeLight: 'auto',
         themeDark: 'auto'
       }
 
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       if (state.settings.codeStyle) {
-        // @ts-ignore eslint-disable-next-line
+        // @ts-ignore oxlint-disable-next-line
         state.settings.codePreview.themeLight = state.settings.codeStyle
-        // @ts-ignore eslint-disable-next-line
+        // @ts-ignore oxlint-disable-next-line
         state.settings.codePreview.themeDark = state.settings.codeStyle
       }
 
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       delete state.settings.codeStyle
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       delete state.settings.codeCacheable
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       delete state.settings.codeCacheMaxSize
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       delete state.settings.codeCacheTTL
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       delete state.settings.codeCacheThreshold
       return state
     } catch (error) {
@@ -1770,12 +1770,12 @@ const migrateConfig = {
     try {
       if (state.websearch) {
         // migrate contentLimit to cutoffLimit
-        // @ts-ignore eslint-disable-next-line
+        // @ts-ignore oxlint-disable-next-line
         if (state.websearch.contentLimit) {
           state.websearch.compressionConfig = {
             method: 'cutoff',
             cutoffUnit: 'char',
-            // @ts-ignore eslint-disable-next-line
+            // @ts-ignore oxlint-disable-next-line
             cutoffLimit: state.websearch.contentLimit
           }
         } else {
@@ -1785,7 +1785,7 @@ const migrateConfig = {
           }
         }
 
-        // @ts-ignore eslint-disable-next-line
+        // @ts-ignore oxlint-disable-next-line
         delete state.websearch.contentLimit
       }
       if (state.settings) {
@@ -2065,15 +2065,15 @@ const migrateConfig = {
   '126': (state: RootState) => {
     try {
       state.knowledge.bases.forEach((base) => {
-        // @ts-ignore eslint-disable-next-line
+        // @ts-ignore oxlint-disable-next-line
         if (base.preprocessOrOcrProvider) {
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
           base.preprocessProvider = base.preprocessOrOcrProvider
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
           delete base.preprocessOrOcrProvider
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
           if (base.preprocessProvider.type === 'ocr') {
-            // @ts-ignore eslint-disable-next-line
+            // @ts-ignore oxlint-disable-next-line
             delete base.preprocessProvider
           }
         }
@@ -2134,9 +2134,9 @@ const migrateConfig = {
         openai.serviceTier = serviceTier
       }
 
-      // @ts-ignore eslint-disable-next-line
+      // @ts-ignore oxlint-disable-next-line
       if (state.settings.codePreview) {
-        // @ts-ignore eslint-disable-next-line
+        // @ts-ignore oxlint-disable-next-line
         state.settings.codeViewer = state.settings.codePreview
       } else {
         state.settings.codeViewer = {
@@ -2429,14 +2429,14 @@ const migrateConfig = {
       if (state.settings && state.note) {
         const showWorkspaceValue = (state.settings as any)?.showWorkspace
         if (showWorkspaceValue !== undefined) {
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
           state.note.settings.showWorkspace = showWorkspaceValue
           // Remove from settings
           delete (state.settings as any).showWorkspace
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
         } else if (state.note.settings.showWorkspace === undefined) {
           // Set default value if not exists
-          // @ts-ignore eslint-disable-next-line
+          // @ts-ignore oxlint-disable-next-line
           state.note.settings.showWorkspace = true
         }
       }

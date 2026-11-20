@@ -54,7 +54,7 @@ const SelectionActionApp: FC = () => {
       window.removeEventListener('blur', handleWindowBlur)
     }
     // don't need any dependencies
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

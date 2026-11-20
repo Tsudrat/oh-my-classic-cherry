@@ -171,7 +171,7 @@ const ProviderList: FC<ProviderListProps> = ({ isOnboarding = false }) => {
       window.toast.error(t('settings.models.provider_key_add_failed_by_invalid_data'))
       window.navigate('/settings/provider')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
   const onAddProvider = async () => {
