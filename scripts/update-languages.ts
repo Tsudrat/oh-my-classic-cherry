@@ -81,7 +81,7 @@ export const languages: Record<string, LanguageData> = ${languagesObjectString};
 async function format(filePath: string): Promise<void> {
   console.log('🎨 Formatting file with Biome...')
   try {
-    await execAsync(`pnpm biome format --write ${filePath}`)
+    await execAsync(`pnpm oxfmt --write ${filePath}`)
     console.log('✅ Biome formatting complete.')
   } catch (e: any) {
     console.error('❌ Biome formatting failed:', e.stdout || e.stderr)

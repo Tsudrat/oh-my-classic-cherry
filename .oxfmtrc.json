@@ -1,0 +1,47 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "useTabs": false,
+  "tabWidth": 2,
+  "printWidth": 120,
+  "singleQuote": true,
+  "jsxSingleQuote": false,
+  "quoteProps": "as-needed",
+  "trailingComma": "none",
+  "semi": false,
+  "arrowParens": "always",
+  "bracketSameLine": true,
+  "bracketSpacing": true,
+  "singleAttributePerLine": false,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "**/.claude/**",
+    "**/.vscode/**",
+    "**/.conductor/**",
+    "resources/**",
+    "**/dist/**",
+    "out/**",
+    "build/**",
+    ".yarn/**",
+    ".github/**",
+    ".husky/**",
+    "coverage/**",
+    "**/*.yaml",
+    "**/*.yml",
+    "/*.mjs",
+    "/*.cjs",
+    "**/*.md",
+    "src/main/integration/**",
+    "**/tailwind.css"
+  ],
+  "overrides": [
+    {
+      "files": ["src/renderer/**/*.{ts,tsx}"],
+      "options": {
+        "sortTailwindcss": {
+          "functions": ["cn", "clsx", "cva", "twMerge"],
+          "stylesheet": "./src/renderer/src/assets/styles/tailwind.css"
+        }
+      }
+    }
+  ]
+}

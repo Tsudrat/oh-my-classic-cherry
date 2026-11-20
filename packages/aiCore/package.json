@@ -12,14 +12,22 @@
     "typecheck": "tsc --noEmit",
     "lint": "oxlint --fix",
     "lint:check": "oxlint",
-    "format": "biome format --write && biome lint --write",
-    "format:check": "biome format && biome lint",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
     "clean": "rm -rf dist",
     "test": "vitest run",
     "test:watch": "vitest",
     "prepublishOnly": "pnpm build"
   },
-  "keywords": ["ai", "sdk", "openai", "anthropic", "google", "cherry-studio", "vercel-ai-sdk"],
+  "keywords": [
+    "ai",
+    "sdk",
+    "openai",
+    "anthropic",
+    "google",
+    "cherry-studio",
+    "vercel-ai-sdk"
+  ],
   "author": "Cherry Studio",
   "license": "MIT",
   "repository": {
@@ -59,7 +67,9 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
