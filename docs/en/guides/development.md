@@ -9,7 +9,7 @@
 
 ### Zed
 
-1. Install extensions: [Biome](https://github.com/biomejs/biome-zed), [oxc](https://github.com/oxc-project/zed-oxc)
+1. Install the [oxc](https://github.com/oxc-project/zed-oxc) extension
 2. Copy the example settings file to your local Zed config:
    ```bash
    cp .zed/settings.json.example .zed/settings.json

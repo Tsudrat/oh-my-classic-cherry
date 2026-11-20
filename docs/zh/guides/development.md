@@ -9,7 +9,7 @@
 
 ### Zed
 
-1. 安装扩展：[Biome](https://github.com/biomejs/biome-zed)、[oxc](https://github.com/oxc-project/zed-oxc)
+1. 安装 [oxc](https://github.com/oxc-project/zed-oxc) 扩展
 2. 复制示例配置文件到本地 Zed 配置目录：
    ```bash
    cp .zed/settings.json.example .zed/settings.json
