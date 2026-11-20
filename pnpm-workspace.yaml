@@ -100,6 +100,15 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - '@ai-sdk/google@3.0.146'
+  - '@tsrs/darwin-arm64@7.1.0-beta.tsrs4'
+  - '@tsrs/darwin-x64@7.1.0-beta.tsrs4'
+  - '@tsrs/linux-arm64-gnu@7.1.0-beta.tsrs4'
+  - '@tsrs/linux-arm64-musl@7.1.0-beta.tsrs4'
+  - '@tsrs/linux-x64-gnu@7.1.0-beta.tsrs4'
+  - '@tsrs/linux-x64-musl@7.1.0-beta.tsrs4'
+  - '@tsrs/win32-arm64@7.1.0-beta.tsrs4'
+  - '@tsrs/win32-x64@7.1.0-beta.tsrs4'
+  - tsrs@7.1.0-beta.tsrs4
 
 packageExtensions:
   '@typescript-eslint/typescript-estree':

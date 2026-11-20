@@ -63,7 +63,7 @@
     "prepublishOnly": "pnpm build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsrs --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.71",
