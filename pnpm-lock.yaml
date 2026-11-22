@@ -683,9 +683,6 @@ importers:
       '@types/ws':
         specifier: ^8.18.1
         version: 8.18.1
-      '@typescript/native-preview':
-        specifier: 7.0.0-dev.20260204.1
-        version: 7.0.0-dev.20260204.1
       '@uiw/codemirror-extensions-langs':
         specifier: 4.25.7
         version: 4.25.7(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.16)(@lezer/common@1.5.1)(@lezer/highlight@1.2.3)(@lezer/javascript@1.5.4)(@lezer/lr@1.4.8)
@@ -17614,6 +17611,7 @@ snapshots:
       '@typescript/native-preview-linux-x64': 7.0.0-dev.20260204.1
       '@typescript/native-preview-win32-arm64': 7.0.0-dev.20260204.1
       '@typescript/native-preview-win32-x64': 7.0.0-dev.20260204.1
+    optional: true
 
   '@typescript/typescript-aix-ppc64@7.0.2':
     optional: true
