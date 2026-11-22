@@ -227,7 +227,6 @@
     "@types/unist": "3.0.3",
     "@types/word-extractor": "^1",
     "@types/ws": "^8.18.1",
-    "@typescript/native-preview": "7.0.0-dev.20260204.1",
     "@uiw/codemirror-extensions-langs": "4.25.7",
     "@uiw/codemirror-themes-all": "4.25.7",
     "@uiw/react-codemirror": "4.25.7",
