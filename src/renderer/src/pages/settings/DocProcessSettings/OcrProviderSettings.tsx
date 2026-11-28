@@ -20,31 +20,31 @@ type Props = {
   provider: OcrProvider
 }
 
+const ProviderSettings = ({ provider }: Props) => {
+  if (isBuiltinOcrProvider(provider)) {
+    switch (provider.id) {
+      case 'tesseract':
+        return <OcrTesseractSettings />
+      case 'system':
+        return <OcrSystemSettings />
+      case 'paddleocr':
+        return <OcrPpocrSettings />
+      case 'ovocr':
+        return <OcrOVSettings />
+      default:
+        return null
+    }
+  }
+
+  throw new Error('Not supported OCR provider')
+}
+
 const OcrProviderSettings = ({ provider }: Props) => {
   const { theme: themeMode } = useTheme()
   const { OcrProviderLogo, getOcrProviderName } = useOcrProviders()
 
   if (!isWin && !isMac && isOcrSystemProvider(provider)) {
     return null
-  }
-
-  const ProviderSettings = () => {
-    if (isBuiltinOcrProvider(provider)) {
-      switch (provider.id) {
-        case 'tesseract':
-          return <OcrTesseractSettings />
-        case 'system':
-          return <OcrSystemSettings />
-        case 'paddleocr':
-          return <OcrPpocrSettings />
-        case 'ovocr':
-          return <OcrOVSettings />
-        default:
-          return null
-      }
-    } else {
-      throw new Error('Not supported OCR provider')
-    }
   }
 
   return (
@@ -57,7 +57,7 @@ const OcrProviderSettings = ({ provider }: Props) => {
       </SettingTitle>
       <Divider style={{ width: '100%', margin: '10px 0' }} />
       <ErrorBoundary>
-        <ProviderSettings />
+        <ProviderSettings provider={provider} />
       </ErrorBoundary>
     </SettingGroup>
   )

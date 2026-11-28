@@ -29,6 +29,11 @@ const Footer: FC<FooterProps> = ({
 }) => {
   const { t } = useTranslation()
 
+  const handleCopy = () => {
+    if (loading || !onCopy) return
+    onCopy()
+  }
+
   useHotkeys('esc', () => {
     onEsc()
   })
@@ -36,11 +41,6 @@ const Footer: FC<FooterProps> = ({
   useHotkeys('c', () => {
     handleCopy()
   })
-
-  const handleCopy = () => {
-    if (loading || !onCopy) return
-    onCopy()
-  }
 
   return (
     <WindowFooter className="drag">

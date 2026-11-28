@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
-import { TopView } from '../TopView'
+import { TopView, usePopupHide } from '../TopView'
 
 const logger = loggerService.withContext('TextEditPopup')
 
@@ -121,7 +121,7 @@ const PopupContainer: React.FC<Props> = ({
     }
   }
 
-  TextEditPopup.hide = onCancel
+  usePopupHide(TextEditPopup, onCancel)
 
   return (
     <Modal

@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 
 import { Box } from '../Layout'
-import { TopView } from '../TopView'
+import { TopView, usePopupHide } from '../TopView'
 
 interface PromptPopupShowParams {
   title: string
@@ -57,7 +57,7 @@ const PromptPopupContainer: React.FC<Props> = ({
     }
   }
 
-  PromptPopup.hide = onCancel
+  usePopupHide(PromptPopup, onCancel)
 
   return (
     <Modal

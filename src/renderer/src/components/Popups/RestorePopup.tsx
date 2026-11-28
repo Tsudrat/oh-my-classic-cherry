@@ -5,7 +5,7 @@ import { Modal, Progress } from 'antd'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TopView } from '../TopView'
+import { TopView, usePopupHide } from '../TopView'
 
 interface Props {
   resolve: (data: any) => void
@@ -56,7 +56,7 @@ const PopupContainer: React.FC<Props> = ({ resolve }) => {
     return getRestoreProgressLabel(progressData.stage)
   }
 
-  RestorePopup.hide = onCancel
+  usePopupHide(RestorePopup, onCancel)
 
   const isDisabled = progressData ? progressData.stage !== 'completed' : false
 

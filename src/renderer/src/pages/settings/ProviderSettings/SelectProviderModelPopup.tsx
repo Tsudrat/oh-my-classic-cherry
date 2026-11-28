@@ -1,5 +1,5 @@
 import ModelSelector from '@renderer/components/ModelSelector'
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { isRerankModel } from '@renderer/config/models'
 import { useTimer } from '@renderer/hooks/useTimer'
 import i18n from '@renderer/i18n'
@@ -51,7 +51,7 @@ const PopupContainer: React.FC<Props> = ({ provider, resolve, reject }) => {
     TopView.hide(TopViewKey)
   }
 
-  SelectProviderModelPopup.hide = onCancel
+  usePopupHide(SelectProviderModelPopup, onCancel)
 
   return (
     <Modal

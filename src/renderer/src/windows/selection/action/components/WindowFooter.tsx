@@ -27,6 +27,14 @@ const WindowFooter: FC<FooterProps> = ({ content = '', loading = false, onPause,
   const { setTimeoutTimer } = useTimer()
 
   useEffect(() => {
+    const handleWindowFocus = () => {
+      setIsWindowFocus(true)
+    }
+
+    const handleWindowBlur = () => {
+      setIsWindowFocus(false)
+    }
+
     window.addEventListener('focus', handleWindowFocus)
     window.addEventListener('blur', handleWindowBlur)
 
@@ -63,21 +71,6 @@ const WindowFooter: FC<FooterProps> = ({ content = '', loading = false, onPause,
       hideTimerRef.current = null
     }, 2000)
   }
-
-  useHotkeys('c', () => {
-    showMePeriod()
-    handleCopy()
-  })
-
-  useHotkeys('r', () => {
-    showMePeriod()
-    handleRegenerate()
-  })
-
-  useHotkeys('esc', () => {
-    showMePeriod()
-    handleEsc()
-  })
 
   const handleEsc = () => {
     setIsEscHovered(true)
@@ -143,13 +136,20 @@ const WindowFooter: FC<FooterProps> = ({ content = '', loading = false, onPause,
       })
   }
 
-  const handleWindowFocus = () => {
-    setIsWindowFocus(true)
-  }
+  useHotkeys('c', () => {
+    showMePeriod()
+    handleCopy()
+  })
 
-  const handleWindowBlur = () => {
-    setIsWindowFocus(false)
-  }
+  useHotkeys('r', () => {
+    showMePeriod()
+    handleRegenerate()
+  })
+
+  useHotkeys('esc', () => {
+    showMePeriod()
+    handleEsc()
+  })
 
   return (
     <Container

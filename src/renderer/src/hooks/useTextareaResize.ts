@@ -95,6 +95,7 @@ export function useTextareaResize(options: UseTextareaResizeOptions = {}): UseTe
       if (expanded) {
         const viewportHeight = window.innerHeight || expandedHeight
         const desiredHeight = Math.max(minHeight, Math.min(expandedHeight, viewportHeight * 0.9))
+        // oxlint-disable-next-line react/immutability -- this hook intentionally provides imperative textarea resizing
         textArea.style.height = `${desiredHeight}px`
         setCustomHeight(desiredHeight)
         setIsExpanded(true)

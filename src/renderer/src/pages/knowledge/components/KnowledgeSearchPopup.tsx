@@ -1,6 +1,6 @@
 import { loggerService } from '@logger'
 import { HStack } from '@renderer/components/Layout'
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { searchKnowledgeBase } from '@renderer/services/KnowledgeService'
 import type { FileMetadata, KnowledgeBase, KnowledgeSearchResult } from '@renderer/types'
 import type { InputRef } from 'antd'
@@ -63,7 +63,7 @@ const PopupContainer: React.FC<Props> = ({ base, resolve }) => {
     resolve({})
   }
 
-  KnowledgeSearchPopup.hide = onCancel
+  usePopupHide(KnowledgeSearchPopup, onCancel)
 
   useEffect(() => {
     if (searchInputRef.current) {

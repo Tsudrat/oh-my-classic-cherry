@@ -32,6 +32,7 @@ const ObsidianProcessingMethod = {
 interface PopupContainerProps {
   title: string
   obsidianTags: string | null
+  createdAt: string
   processingMethod: (typeof ObsidianProcessingMethod)[keyof typeof ObsidianProcessingMethod]
   open: boolean
   resolve: (success: boolean) => void
@@ -136,6 +137,7 @@ const convertToTreeData = (files: FileInfo[]) => {
 const PopupContainer: React.FC<PopupContainerProps> = ({
   title,
   obsidianTags,
+  createdAt,
   processingMethod,
   open,
   resolve,
@@ -148,7 +150,7 @@ const PopupContainer: React.FC<PopupContainerProps> = ({
   const [state, setState] = useState({
     title,
     tags: obsidianTags || '',
-    createdAt: new Date().toISOString().split('T')[0],
+    createdAt,
     source: 'Cherry Studio',
     processingMethod: processingMethod,
     folder: ''

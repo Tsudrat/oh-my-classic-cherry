@@ -1,4 +1,4 @@
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { useTheme } from '@renderer/context/ThemeProvider'
 import { Modal } from 'antd'
 import { useState } from 'react'
@@ -29,7 +29,7 @@ const PopupContainer: React.FC<Props> = ({ resolve }) => {
     resolve({})
   }
 
-  TranslateSettingsPopup.hide = onCancel
+  usePopupHide(TranslateSettingsPopup, onCancel)
 
   return (
     <Modal

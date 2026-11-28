@@ -359,7 +359,7 @@ const MessageBlockRenderer: React.FC<Props> = ({ blocks, message }) => {
               messageId: message.id,
               type: MessageBlockType.UNKNOWN,
               status: MessageBlockStatus.PROCESSING,
-              createdAt: new Date().toISOString()
+              createdAt: message.createdAt
             }}
           />
         </AnimatedBlockWrapper>

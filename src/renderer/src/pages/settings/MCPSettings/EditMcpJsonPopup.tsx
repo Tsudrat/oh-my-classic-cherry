@@ -1,6 +1,6 @@
 import { loggerService } from '@logger'
 import CodeEditor from '@renderer/components/CodeEditor'
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { useAppDispatch, useAppSelector } from '@renderer/store'
 import { setMCPServers } from '@renderer/store/mcp'
 import type { MCPServer } from '@renderer/types'
@@ -109,7 +109,7 @@ const PopupContainer: React.FC<Props> = ({ resolve }) => {
     resolve({})
   }
 
-  EditMcpJsonPopup.hide = onCancel
+  usePopupHide(EditMcpJsonPopup, onCancel)
 
   return (
     <Modal

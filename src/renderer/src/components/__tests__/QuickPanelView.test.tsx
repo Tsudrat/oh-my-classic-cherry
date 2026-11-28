@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { render, screen } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
@@ -58,16 +58,44 @@ type KeyStep = {
 const PAGE_SIZE = 7
 
 // 用于测试 open 行为的组件
-function OpenPanelOnMount({ list }: { list: QuickPanelListItem[] }) {
-  const quickPanel = useQuickPanel()
+function OpenPanelOnMount({ list, defaultIndex }: { list: QuickPanelListItem[]; defaultIndex?: number }) {
+  const { open } = useQuickPanel()
   useEffect(() => {
-    quickPanel.open({
+    open({
       title: 'Test Panel',
       list,
       symbol: 'test',
+      pageSize: PAGE_SIZE,
+      defaultIndex
+    })
+  }, [list, open, defaultIndex])
+  return null
+}
+
+function OpenPanelWithShrinkableList({
+  initialList,
+  shrunkList
+}: {
+  initialList: QuickPanelListItem[]
+  shrunkList: QuickPanelListItem[]
+}) {
+  const { open, updateList } = useQuickPanel()
+
+  useEffect(() => {
+    open({
+      title: 'Test Panel',
+      list: initialList,
+      symbol: 'test',
       pageSize: PAGE_SIZE
     })
-  }, [list, quickPanel])
+  }, [initialList, open])
+
+  useEffect(() => {
+    const shrinkList = () => updateList(shrunkList)
+    window.addEventListener('shrink-quick-panel-list', shrinkList)
+    return () => window.removeEventListener('shrink-quick-panel-list', shrinkList)
+  }, [shrunkList, updateList])
+
   return null
 }
 
@@ -169,6 +197,53 @@ describe('QuickPanelView', () => {
       expect(item1).toBeInTheDocument()
       const focusedItem1 = item1.closest('.focused')
       expect(focusedItem1).toBeNull()
+    })
+
+    it('should apply defaultIndex when the panel opens', async () => {
+      const list = createList(10)
+
+      render(
+        wrapWithProviders(
+          <>
+            <QuickPanelView setInputText={vi.fn()} />
+            <OpenPanelOnMount list={list} defaultIndex={2} />
+          </>
+        )
+      )
+
+      const panel = screen.getByTestId('quick-panel')
+      await waitFor(() => {
+        const focused = panel.querySelectorAll('.focused')
+        expect(focused.length).toBe(1)
+        expect(focused[0].textContent).toContain('Item 3')
+      })
+    })
+
+    it('should clamp the focused item when the list shrinks', async () => {
+      const initialList = createList(5)
+      const shrunkList = createList(2)
+      const user = userEvent.setup()
+
+      render(
+        wrapWithProviders(
+          <>
+            <QuickPanelView setInputText={vi.fn()} />
+            <OpenPanelWithShrinkableList initialList={initialList} shrunkList={shrunkList} />
+          </>
+        )
+      )
+
+      const panel = screen.getByTestId('quick-panel')
+      await user.keyboard('{ArrowUp}')
+      expect(panel.querySelector('.focused')?.textContent).toContain('Item 5')
+
+      act(() => {
+        window.dispatchEvent(new Event('shrink-quick-panel-list'))
+      })
+
+      await waitFor(() => {
+        expect(panel.querySelector('.focused')?.textContent).toContain('Item 2')
+      })
     })
 
     it('should focus on the right item using ArrowUp, ArrowDown', async () => {

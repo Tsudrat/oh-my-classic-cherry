@@ -24,7 +24,10 @@ export const TracePage: React.FC<TracePageProp> = ({ topicId, traceId, modelName
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const { t } = useTranslation()
 
-  const mergeTraceModals = useCallback((oldNodes: TraceModal[], newNodes: TraceModal[]): TraceModal[] => {
+  const mergeTraceModals = useCallback(function mergeTraceModalsFn(
+    oldNodes: TraceModal[],
+    newNodes: TraceModal[]
+  ): TraceModal[] {
     const oldMap = new Map(oldNodes.map((n) => [n.id, n]))
     return newNodes.map((newNode) => {
       const oldNode = oldMap.get(newNode.id)
@@ -33,7 +36,7 @@ export const TracePage: React.FC<TracePageProp> = ({ topicId, traceId, modelName
         if (oldNode.endTime) {
           return oldNode
         }
-        oldNode.children = mergeTraceModals(oldNode.children, newNode.children)
+        oldNode.children = mergeTraceModalsFn(oldNode.children, newNode.children)
         Object.assign(oldNode, newNode)
         return oldNode
       } else {
@@ -42,7 +45,11 @@ export const TracePage: React.FC<TracePageProp> = ({ topicId, traceId, modelName
     })
   }, [])
 
-  const updatePercentAndStart = useCallback((nodes: TraceModal[], rootStart?: number, rootEnd?: number) => {
+  const updatePercentAndStart = useCallback(function updatePercentAndStartFn(
+    nodes: TraceModal[],
+    rootStart?: number,
+    rootEnd?: number
+  ) {
     nodes.forEach((node) => {
       const _rootStart = rootStart || node.startTime
       const _rootEnd = rootEnd || node.endTime || Date.now()
@@ -52,7 +59,7 @@ export const TracePage: React.FC<TracePageProp> = ({ topicId, traceId, modelName
       node.start = ((node.startTime - _rootStart) * 100) / duration
       node.percent = duration === 0 ? 0 : (usedTime * 100) / duration
       if (node.children) {
-        updatePercentAndStart(node.children, _rootStart, _rootEnd)
+        updatePercentAndStartFn(node.children, _rootStart, _rootEnd)
       }
     })
   }, [])
@@ -78,11 +85,11 @@ export const TracePage: React.FC<TracePageProp> = ({ topicId, traceId, modelName
     )
   }
 
-  const findNodeById = useCallback((nodes: TraceModal[], id: string): TraceModal | null => {
+  const findNodeById = useCallback(function findNodeByIdFn(nodes: TraceModal[], id: string): TraceModal | null {
     for (const n of nodes) {
       if (n.id === id) return n
       if (n.children) {
-        const found = findNodeById(n.children, id)
+        const found = findNodeByIdFn(n.children, id)
         if (found) return found
       }
     }

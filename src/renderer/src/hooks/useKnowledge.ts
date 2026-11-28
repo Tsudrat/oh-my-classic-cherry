@@ -95,6 +95,7 @@ export const useKnowledge = (baseId: string) => {
       const updatedNote = {
         ...note,
         content,
+        // oxlint-disable-next-line react/purity -- runs when updating a note, not during render
         updated_at: Date.now()
       }
       await db.knowledge_notes.put(updatedNote)
@@ -164,6 +165,7 @@ export const useKnowledge = (baseId: string) => {
         processingError: '',
         uniqueId: undefined,
         retryCount: 0,
+        // oxlint-disable-next-line react/purity -- runs when refreshing an item, not during render
         updated_at: Date.now()
       })
       checkAllBases()

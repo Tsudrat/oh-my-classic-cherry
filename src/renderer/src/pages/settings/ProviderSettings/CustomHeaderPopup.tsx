@@ -1,5 +1,5 @@
 import CodeEditor from '@renderer/components/CodeEditor'
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { useCopilot } from '@renderer/hooks/useCopilot'
 import { useProvider } from '@renderer/hooks/useProvider'
 import type { Provider } from '@renderer/types'
@@ -59,7 +59,7 @@ const PopupContainer: React.FC<Props> = ({ provider, resolve }) => {
     resolve({})
   }
 
-  CustomHeaderPopup.hide = onCancel
+  usePopupHide(CustomHeaderPopup, onCancel)
 
   return (
     <Modal

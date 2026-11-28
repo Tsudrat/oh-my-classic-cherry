@@ -3,7 +3,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 
 import CodeEditor from '../CodeEditor'
-import { TopView } from '../TopView'
+import { TopView, usePopupHide } from '../TopView'
 
 interface Props {
   text: string
@@ -27,7 +27,7 @@ const PopupContainer: React.FC<Props> = ({ text, title, extension, resolve }) =>
     resolve({})
   }
 
-  TextFilePreviewPopup.hide = onCancel
+  usePopupHide(TextFilePreviewPopup, onCancel)
 
   return (
     <Modal

@@ -128,6 +128,8 @@ const Markdown: FC<Props> = ({ block, postProcess }) => {
     return plugins
   }, [mathEngine, messageContent, block.id])
 
+  const hasStyleTag = /<style\b[^>]*>/i.test(messageContent)
+
   const components = useMemo<Partial<Components>>(() => {
     return {
       a: (props: any) => <Link {...props} />,
@@ -140,13 +142,10 @@ const Markdown: FC<Props> = ({ block, postProcess }) => {
         if (hasImage) return <div {...props} />
         return <p {...props} />
       },
-      svg: MarkdownSvgRenderer
+      svg: MarkdownSvgRenderer,
+      ...(hasStyleTag ? { style: MarkdownShadowDOMRenderer as any } : {})
     }
-  }, [block.id])
-
-  if (/<style\b[^>]*>/i.test(messageContent)) {
-    components.style = MarkdownShadowDOMRenderer as any
-  }
+  }, [block.id, hasStyleTag])
 
   const urlTransform = useCallback((value: string) => {
     if (value.startsWith('data:image/png') || value.startsWith('data:image/jpeg')) return value

@@ -3,7 +3,7 @@ import { Alert, Modal, Progress, Space, Spin } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TopView } from '../TopView'
+import { TopView, usePopupHide } from '../TopView'
 
 interface PopupResult {
   success?: boolean
@@ -69,7 +69,7 @@ const PopupContainer: React.FC<Props> = ({ resolve }) => {
     resolve({})
   }
 
-  ImportPopup.hide = onCancel
+  usePopupHide(ImportPopup, onCancel)
 
   return (
     <Modal

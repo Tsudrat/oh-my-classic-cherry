@@ -28,6 +28,7 @@ export default class ObsidianExportPopup {
           messages={options.messages}
           rawContent={options.rawContent}
           obsidianTags={''}
+          createdAt={new Date().toISOString().split('T')[0]}
           open={true}
           resolve={(v) => {
             resolve(v)

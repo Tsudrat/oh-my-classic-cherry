@@ -1,4 +1,4 @@
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { useTheme } from '@renderer/context/ThemeProvider'
 import { ThemeMode } from '@renderer/types'
 import { runAsyncFunction } from '@renderer/utils'
@@ -93,7 +93,7 @@ const PopupContainer: React.FC<Props> = ({
     })
   }, [theme, i18n.language])
 
-  PrivacyPopup.hide = () => setOpen(false)
+  usePopupHide(PrivacyPopup, () => setOpen(false))
 
   return (
     <Modal
