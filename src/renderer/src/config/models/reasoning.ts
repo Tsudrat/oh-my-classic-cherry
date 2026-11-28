@@ -20,6 +20,7 @@ import {
   isGPT56ProModel,
   isGPT56SeriesModel,
   isGPT61SolModel,
+  isGPT62SeriesModel,
   isOpenAIDeepResearchModel,
   isOpenAIOpenWeightModel,
   isOpenAIReasoningModel,
@@ -31,8 +32,8 @@ import {
   isClaudeAlwaysOnAdaptiveThinkingModel,
   isGemini3FlashModel,
   isGemini3ProModel,
-  isGemini4HydrogenModel,
   isGemini4Model,
+  isGemini4XHighModel,
   isGemini31FlashImageModel,
   isGemini31FlashLiteModel,
   isGemini31ProModel,
@@ -80,6 +81,8 @@ export const MODEL_SUPPORTED_REASONING_EFFORT = {
   gpt6_astra: ['low', 'medium', 'high', 'xhigh', 'max'] as const,
   // GPT-6.1 Sol — does not support `none`/`minimal` (Terra supports `none`, uses `gpt6`)
   gpt6_1: ['low', 'medium', 'high', 'xhigh', 'max'] as const,
+  // GPT-6.2 Astra / Sol — low|medium|high|xhigh|max; `none`/`minimal` are rejected
+  gpt6_2: ['low', 'medium', 'high', 'xhigh', 'max'] as const,
   gpt_oss: ['low', 'medium', 'high'] as const,
   grok: ['low', 'high'] as const,
   grok4_fast: ['auto'] as const,
@@ -97,7 +100,7 @@ export const MODEL_SUPPORTED_REASONING_EFFORT = {
   // Gemini 4 Argon / Carbon: thinking_level low|medium|high only; `minimal` and
   // thinking_budget both return HTTP 400. Thinking cannot be disabled.
   gemini4: ['low', 'medium', 'high'] as const,
-  // Gemini 4 Hydrogen additionally supports `xhigh` (default `high`).
+  // Gemini 4 Hydrogen / Neon additionally support `xhigh` (default `high`).
   gemini4_hydrogen: ['low', 'medium', 'high', 'xhigh'] as const,
   // Google-hosted Gemma 4 documents `minimal` as the closest supported near-off
   // setting for most requests, but does not guarantee thinking is fully disabled.
@@ -105,6 +108,8 @@ export const MODEL_SUPPORTED_REASONING_EFFORT = {
   gemma4_hosted: ['minimal', 'high'] as const,
   qwen: ['low', 'medium', 'high'] as const,
   qwen_thinking: ['low', 'medium', 'high'] as const,
+  // Qwen4-Max: hybrid thinking with low|high|xhigh (medium maps upstream to high)
+  qwen4: ['none', 'low', 'high', 'xhigh'] as const,
   qwen3_8_large: ['low', 'medium', 'xhigh'] as const,
   // Qwen3.8 Max / 27B / Flash(+Next): low | medium | xhigh (high/max map upstream to xhigh)
   qwen3_8_hybrid: ['none', 'low', 'medium', 'xhigh'] as const,
@@ -180,6 +185,7 @@ export const MODEL_SUPPORTED_OPTIONS: ThinkingOptionConfig = {
   gpt6: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.gpt6] as const,
   gpt6_astra: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.gpt6_astra] as const,
   gpt6_1: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.gpt6_1] as const,
+  gpt6_2: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.gpt6_2] as const,
   gpt_oss: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.gpt_oss] as const,
   grok: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.grok] as const,
   grok4_fast: ['default', 'none', ...MODEL_SUPPORTED_REASONING_EFFORT.grok4_fast] as const,
@@ -197,6 +203,7 @@ export const MODEL_SUPPORTED_OPTIONS: ThinkingOptionConfig = {
   gemma4_hosted: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.gemma4_hosted] as const,
   qwen: ['default', 'none', ...MODEL_SUPPORTED_REASONING_EFFORT.qwen] as const,
   qwen_thinking: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.qwen_thinking] as const,
+  qwen4: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.qwen4] as const,
   qwen3_8_large: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.qwen3_8_large] as const,
   qwen3_8_hybrid: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.qwen3_8_hybrid] as const,
   qwen3_8_flash: ['default', ...MODEL_SUPPORTED_REASONING_EFFORT.qwen3_8_flash] as const,
@@ -251,6 +258,7 @@ export function getCurrentCatalogThinkingType(model: Model): ThinkingModelType |
   // Grok 4.6+ share the same effort ladder (low/medium/high/xhigh, no none)
   if (/^grok-4[.-]([6-9]|\d{2,})(?:-|$)/.test(modelId)) return 'grok_4_6'
 
+  if (/^qwen4(?:[.-]\d+)?-max(?:-|$)/.test(modelId)) return 'qwen4'
   if (/^qwen3[.-]8-2[.-]4t-a95b(?:-|$)/.test(modelId)) return 'qwen3_8_large'
   if (/^qwen3[.-]8-27b(?:-|$)/.test(modelId)) {
     return providerId === 'openrouter' ? 'qwen3_8_large' : 'qwen3_8_hybrid'
@@ -328,8 +336,14 @@ const _getThinkModelType = (model: Model): ThinkingModelType => {
   } else if (isOpenAIDeepResearchModel(model)) {
     return 'openai_deep_research'
   } else if (isGPT6FamilyModel(model)) {
-    // Astra and 6.1 Sol reject `none`; Sol / Luna / Terra keep the full ladder.
-    thinkingModelType = isGPT6AstraModel(model) ? 'gpt6_astra' : isGPT61SolModel(model) ? 'gpt6_1' : 'gpt6'
+    // Astra, 6.1 Sol, and the 6.2 series reject `none`; Sol / Luna / Terra keep the full ladder.
+    if (isGPT62SeriesModel(model)) {
+      thinkingModelType = 'gpt6_2'
+    } else if (isGPT6AstraModel(model)) {
+      thinkingModelType = 'gpt6_astra'
+    } else {
+      thinkingModelType = isGPT61SolModel(model) ? 'gpt6_1' : 'gpt6'
+    }
   } else if (isGPT56SeriesModel(model)) {
     thinkingModelType = isGPT56ProModel(model) ? 'gpt56pro' : 'gpt5_6'
   } else if (isGPT5FamilyModel(model)) {
@@ -371,7 +385,7 @@ const _getThinkModelType = (model: Model): ThinkingModelType => {
     thinkingModelType = 'grok4_fast'
   } else if (isSupportedThinkingTokenGeminiModel(model)) {
     if (isGemini4Model(model)) {
-      thinkingModelType = isGemini4HydrogenModel(model) ? 'gemini4_hydrogen' : 'gemini4'
+      thinkingModelType = isGemini4XHighModel(model) ? 'gemini4_hydrogen' : 'gemini4'
     } else if (isHostedGemma4ThinkingModel(model)) {
       thinkingModelType = 'gemma4_hosted'
     } else if (isGemini31FlashImageModel(model)) {
@@ -697,7 +711,7 @@ export function isGeminiReasoningModel(model?: Model): boolean {
 
 // Gemini 支持思考模式的模型正则
 export const GEMINI_THINKING_MODEL_REGEX =
-  /gemini-(?:2\.5.*(?:-latest)?|3(?:\.\d+)?-(?:flash|pro)(?:-preview)?|4(?:\.\d+)?-(?:argon|carbon|hydrogen)(?:-[\w-]+)*|flash-latest|pro-latest|flash-lite-latest)(?:-[\w-]+)*$/i
+  /gemini-(?:2\.5.*(?:-latest)?|3(?:\.\d+)?-(?:flash|pro)(?:-preview)?|4(?:\.\d+)?-(?:argon|carbon|hydrogen|neon)(?:-[\w-]+)*|flash-latest|pro-latest|flash-lite-latest)(?:-[\w-]+)*$/i
 
 export const isHostedGemma4ThinkingModel = (model?: Model): boolean => {
   if (!model) {
@@ -775,8 +789,8 @@ export function isSupportedThinkingTokenQwenModel(model?: Model): boolean {
     return false
   }
 
-  // qwen 3.5~3.9 series models, all support
-  if (/^qwen3\.[5-9]/.test(modelId)) {
+  // Qwen4-Max and Qwen 3.5~3.9 series models support thinking control
+  if (/^qwen4(?:[.-]\d+)?-max(?:-|$)/.test(modelId) || /^qwen3\.[5-9]/.test(modelId)) {
     return true
   }
 
@@ -809,6 +823,11 @@ export function isQwen38EffortModel(model?: Model): boolean {
   return (
     type === 'qwen3_8_large' || type === 'qwen3_8_hybrid' || type === 'qwen3_8_flash' || type === 'qwen3_8_max_preview'
   )
+}
+
+export function isQwen4EffortModel(model?: Model): boolean {
+  if (!model) return false
+  return getCurrentCatalogThinkingType(model) === 'qwen4'
 }
 
 /** 是否为不支持思考控制的Qwen推理模型 */

@@ -310,20 +310,19 @@ export const isGeminiModel = (model: Model) => {
 
 /**
  * Check if the model is a Gemini 4 model
- * Matches: gemini-4-argon, gemini-4-carbon, gemini-4-hydrogen (and variants like
- * -cyber-permissive / -eap suffixes).
+ * Matches: gemini-4-argon, gemini-4-carbon, gemini-4-hydrogen, gemini-4-neon
+ * (and variants like -cyber-permissive / -eap suffixes).
  */
 export const isGemini4Model = (model: Model | undefined | null): boolean => {
   if (!model) {
     return false
   }
   const modelId = getLowerBaseModelName(model.id, '/')
-  return /^gemini-4(?:[.-]\d+)?-(?:argon|carbon|hydrogen)(?:-[\w-]+)*$/i.test(modelId)
+  return /^gemini-4(?:[.-]\d+)?-(?:argon|carbon|hydrogen|neon)(?:-[\w-]+)*$/i.test(modelId)
 }
 
 /**
- * Check if the model is Gemini 4 Hydrogen — the only Gemini 4 tier whose
- * thinking_level ladder includes `xhigh`.
+ * Check if the model is Gemini 4 Hydrogen.
  */
 export const isGemini4HydrogenModel = (model: Model | undefined | null): boolean => {
   if (!model) {
@@ -331,6 +330,15 @@ export const isGemini4HydrogenModel = (model: Model | undefined | null): boolean
   }
   const modelId = getLowerBaseModelName(model.id, '/')
   return /^gemini-4(?:[.-]\d+)?-hydrogen(?:-[\w-]+)*$/i.test(modelId)
+}
+
+/** Gemini 4 tiers whose thinking_level ladder includes `xhigh`. */
+export const isGemini4XHighModel = (model: Model | undefined | null): boolean => {
+  if (!model) {
+    return false
+  }
+  const modelId = getLowerBaseModelName(model.id, '/')
+  return /^gemini-4(?:[.-]\d+)?-(?:hydrogen|neon)(?:-[\w-]+)*$/i.test(modelId)
 }
 
 export const isGrokModel = (model: Model) => {

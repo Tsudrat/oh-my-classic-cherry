@@ -113,6 +113,8 @@ const ThinkModelTypes = [
   'gpt6_astra',
   // GPT-6.1 Sol — reasoning cannot be disabled (Terra keeps `none`, falls under `gpt6`)
   'gpt6_1',
+  // GPT-6.2 Astra / Sol — reasoning cannot be disabled
+  'gpt6_2',
   'gpt_oss',
   'grok',
   'grok4_fast',
@@ -127,11 +129,12 @@ const ThinkModelTypes = [
   'gemini3_image',
   // Gemini 4 Argon / Carbon — thinking_level only (low|medium|high); cannot be disabled
   'gemini4',
-  // Gemini 4 Hydrogen — same ladder plus `xhigh`
+  // Gemini 4 Hydrogen / Neon — same ladder plus `xhigh`
   'gemini4_hydrogen',
   'gemma4_hosted',
   'qwen',
   'qwen_thinking',
+  'qwen4',
   'qwen3_8_large',
   'qwen3_8_hybrid',
   'qwen3_8_flash',

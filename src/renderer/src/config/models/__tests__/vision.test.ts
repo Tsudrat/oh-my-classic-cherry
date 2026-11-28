@@ -196,10 +196,15 @@ describe('isVisionModel', () => {
     'namazu',
     'gpt-6-sol',
     'gpt-6.1-terra',
+    'gpt-6.2-astra',
+    'gpt-6.2-sol',
     'gemini-4-argon',
+    'gemini-4-neon',
     'gemini-4-hydrogen',
     'inkling',
     'thinkingmachines/inkling-2-small',
+    'thinkingmachines/inkling-2-flash',
+    'thinkingmachines/inkling-2-mini',
     'hy4',
     'nvidia/nemotron-3.5-super-vl-120b-a12b',
     'nvidia/nemotron-3.5-bolt-74b-a9b',
@@ -442,12 +447,17 @@ describe('isVisionModel', () => {
       expect(isVisionModel(createModel({ id: 'qwen3.5-plus' }))).toBe(true)
       expect(isVisionModel(createModel({ id: 'qwen3.5-plus-2026-02-15' }))).toBe(true)
       expect(isVisionModel(createModel({ id: 'qwen3.5-397b-a17b' }))).toBe(true)
+      expect(isVisionModel(createModel({ id: 'qwen3.8-flash' }))).toBe(true)
+      expect(isVisionModel(createModel({ id: 'qwen3.8-max' }))).toBe(true)
+      expect(isVisionModel(createModel({ id: 'qwen3.8-27b' }))).toBe(true)
+      expect(isVisionModel(createModel({ id: 'qwen4-max' }))).toBe(true)
     })
 
     it('should return false for Qwen max series models (non-vision)', () => {
       expect(isVisionModel(createModel({ id: 'qwen3.7-max' }))).toBe(false)
       expect(isVisionModel(createModel({ id: 'qwen-max' }))).toBe(false)
       expect(isVisionModel(createModel({ id: 'qwen3.5-max' }))).toBe(false)
+      expect(isVisionModel(createModel({ id: 'qwen3.8-2.4t-a95b' }))).toBe(false)
     })
 
     it('should return true for Qwen VL series with max suffix', () => {
