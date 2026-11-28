@@ -764,6 +764,22 @@ describe('reasoning utils', () => {
       expect(result).toEqual(expected)
     })
 
+    it.each([
+      ['none', { reasoningEffort: 'none' }],
+      ['xhigh', { reasoningEffort: 'xhigh' }]
+    ] as const)('serializes Qwen4 Max effort %s', async (reasoningEffort, expected) => {
+      const { isReasoningModel } = await import('@renderer/config/models')
+
+      vi.mocked(isReasoningModel).mockReturnValue(true)
+
+      const result = getReasoningEffort(
+        { id: 'test', name: 'Test', settings: { reasoning_effort: reasoningEffort } } as Assistant,
+        { id: 'qwen4-max', name: 'Qwen4 Max', provider: SystemProviderIds.dashscope } as Model
+      )
+
+      expect(result).toEqual(expected)
+    })
+
     it('should map xhigh to max for DeepSeek V4+', async () => {
       const { isReasoningModel, isDeepSeekV4PlusModel } = await import('@renderer/config/models')
 
