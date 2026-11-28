@@ -1,10 +1,15 @@
 import { createRequire } from 'node:module'
 import path from 'node:path'
+import { pathToFileURL } from 'node:url'
 
 import { defineConfig } from 'tsdown'
 
-// rolldown-plugin-dts' tsgo backend accepts any tsc-compatible binary; use tsrs
-const tsrsBin = path.join(path.dirname(createRequire(import.meta.url).resolve('tsrs/package.json')), 'bin', 'tsrs')
+// rolldown-plugin-dts spawns this path directly, so use tsrs' native binary rather than its Node launcher
+const tsrsPackageDir = path.dirname(createRequire(import.meta.url).resolve('tsrs/package.json'))
+const { default: resolveTsrsBinary } = await import(
+  pathToFileURL(path.join(tsrsPackageDir, 'lib', 'getExePath.js')).href
+)
+const tsrsBin = resolveTsrsBinary()
 
 export default defineConfig({
   entry: {
