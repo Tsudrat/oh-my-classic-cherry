@@ -66,7 +66,7 @@ describe('Built-in model catalog', () => {
       expect.arrayContaining(['qwen-image-3.0', 'qwen-image-3.0-pro'])
     )
     expect(SYSTEM_MODELS.dashscope.map((model) => model.id)).toEqual(
-      expect.arrayContaining(['qwen4-max', 'qwen3.8-max', 'qwen3.8-max-preview', 'qwen3.8-2.4t-a95b', 'qwen3.8-27b'])
+      expect.arrayContaining(['qwen4-max', 'qwen3.8-max', 'qwen3.8-max-preview', 'qwen3.8-flash'])
     )
     expect(SYSTEM_MODELS.gemini.some((model) => model.id === 'gemini-4-neon')).toBe(true)
     expect(SYSTEM_MODELS.openai.map((model) => model.id)).toEqual(
