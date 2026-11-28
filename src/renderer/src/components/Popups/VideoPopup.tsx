@@ -8,7 +8,7 @@ import type { UploadFile } from 'antd/es/upload/interface'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TopView } from '../TopView'
+import { TopView, usePopupHide } from '../TopView'
 
 const logger = loggerService.withContext('Video Popup')
 const { Dragger } = Upload
@@ -150,7 +150,7 @@ const VideoPopupContainer: React.FC<Props> = ({ title, resolve }) => {
     TopView.hide(TopViewKey)
   }
 
-  VideoPopup.hide = onCancel
+  usePopupHide(VideoPopup, onCancel)
   const isOkButtonDisabled = !videoFile || !srtFile
 
   return (

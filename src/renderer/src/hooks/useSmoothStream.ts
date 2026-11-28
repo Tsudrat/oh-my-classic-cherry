@@ -34,7 +34,7 @@ export const useSmoothStream = ({ onUpdate, streamDone, minDelay = 10, initialTe
   )
 
   const renderLoop = useCallback(
-    (currentTime: number) => {
+    function renderFrame(currentTime: number) {
       // 1. 如果队列为空
       if (chunkQueueRef.current.length === 0) {
         // 如果流已结束，确保显示最终状态并停止循环
@@ -44,13 +44,13 @@ export const useSmoothStream = ({ onUpdate, streamDone, minDelay = 10, initialTe
           return
         }
         // 如果流还没结束但队列空了，等待下一帧
-        animationFrameRef.current = requestAnimationFrame(renderLoop)
+        animationFrameRef.current = requestAnimationFrame(renderFrame)
         return
       }
 
       // 2. 时间控制，确保最小延迟
       if (currentTime - lastUpdateTimeRef.current < minDelay) {
-        animationFrameRef.current = requestAnimationFrame(renderLoop)
+        animationFrameRef.current = requestAnimationFrame(renderFrame)
         return
       }
       lastUpdateTimeRef.current = currentTime
@@ -74,7 +74,7 @@ export const useSmoothStream = ({ onUpdate, streamDone, minDelay = 10, initialTe
 
       // 6. 如果还有内容需要渲染，继续下一帧
       if (chunkQueueRef.current.length > 0) {
-        animationFrameRef.current = requestAnimationFrame(renderLoop)
+        animationFrameRef.current = requestAnimationFrame(renderFrame)
       }
     },
     [streamDone, onUpdate, minDelay]

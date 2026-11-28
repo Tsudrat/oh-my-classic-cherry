@@ -8,7 +8,7 @@ import { Button, Divider, Flex, Input, Modal, Popover, Switch } from 'antd'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TopView } from '../../../components/TopView'
+import { TopView, usePopupHide } from '../../../components/TopView'
 import { SettingSubtitle } from '..'
 
 interface Props {
@@ -37,7 +37,7 @@ const PopupContainer: React.FC<Props> = ({ resolve }) => {
     dispatch(setTopicNamingPrompt(''))
   }, [dispatch])
 
-  TopicNamingModalPopup.hide = onCancel
+  usePopupHide(TopicNamingModalPopup, onCancel)
 
   const promptVarsContent = useMemo(() => <pre>{t('assistants.presets.add.prompt.variables.tip.content')}</pre>, [t])
 

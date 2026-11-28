@@ -52,6 +52,7 @@ const MathInputDialog: React.FC<MathInputDialogProps> = ({
       const originalOverflow = scrollElement.style.overflow
       const originalScrollbarGutter = scrollElement.style.scrollbarGutter
 
+      // oxlint-disable-next-line react/immutability -- intentionally adjusts the owner-provided scroll container while open
       scrollElement.style.overflow = 'hidden'
       scrollElement.style.scrollbarGutter = 'stable'
 

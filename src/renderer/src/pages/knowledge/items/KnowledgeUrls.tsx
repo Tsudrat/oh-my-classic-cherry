@@ -110,6 +110,7 @@ const KnowledgeUrls: FC<KnowledgeContentProps> = ({ selectedBase }) => {
       updateItem({
         ...item,
         remark: editedRemark,
+        // oxlint-disable-next-line react/purity -- runs when saving an edited remark, not during render
         updated_at: Date.now()
       })
     }

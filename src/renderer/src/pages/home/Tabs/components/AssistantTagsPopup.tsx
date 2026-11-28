@@ -1,7 +1,7 @@
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import { DeleteIcon } from '@renderer/components/Icons'
 import { Box } from '@renderer/components/Layout'
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { useAssistants } from '@renderer/hooks/useAssistant'
 import { useTags } from '@renderer/hooks/useTags'
 import { Button, Empty, Modal } from 'antd'
@@ -69,7 +69,7 @@ const PopupContainer: React.FC<Props> = ({ title, resolve }) => {
     updateTagsOrder(items)
   }
 
-  AssistantTagsPopup.hide = onCancel
+  usePopupHide(AssistantTagsPopup, onCancel)
 
   return (
     <Modal

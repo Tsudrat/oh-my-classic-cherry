@@ -1,7 +1,7 @@
 import Favicon from '@renderer/components/Icons/FallbackFavicon'
 import { useMetaDataParser } from '@renderer/hooks/useMetaDataParser'
 import { Skeleton } from 'antd'
-import { type PropsWithChildren, useCallback, useEffect, useMemo } from 'react'
+import { type PropsWithChildren, useEffect, useMemo } from 'react'
 
 import MarqueeText from './MarqueeText'
 
@@ -31,14 +31,6 @@ export const OGCard = ({ link, show }: Props) => {
     }
   }, [parseMetadata, isLoading, show])
 
-  const GeneratedGraph = useCallback(() => {
-    return (
-      <div className="flex h-48 items-center justify-center bg-accent p-4">
-        <h2 className="text-2xl font-bold">{metadata['og:title'] || hostname}</h2>
-      </div>
-    )
-  }, [hostname, metadata])
-
   if (isLoading) {
     return <CardSkeleton />
   }
@@ -50,7 +42,11 @@ export const OGCard = ({ link, show }: Props) => {
           <img src={metadata['og:image']} alt={metadata['og:imageAlt'] || link} className="max-h-full object-contain" />
         </div>
       )}
-      {!hasImage && <GeneratedGraph />}
+      {!hasImage && (
+        <div className="flex h-48 items-center justify-center bg-accent p-4">
+          <h2 className="text-2xl font-bold">{metadata['og:title'] || hostname}</h2>
+        </div>
+      )}
 
       <div className="flex min-h-0 flex-col overflow-hidden p-2">
         <div className="mb-2 flex items-center gap-2">

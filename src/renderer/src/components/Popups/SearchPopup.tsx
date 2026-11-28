@@ -2,7 +2,7 @@ import HistoryPage from '@renderer/pages/history/HistoryPage'
 import { Modal } from 'antd'
 import { useState } from 'react'
 
-import { TopView } from '../TopView'
+import { TopView, usePopupHide } from '../TopView'
 
 interface Props {
   resolve: (data: any) => void
@@ -23,7 +23,7 @@ const PopupContainer: React.FC<Props> = ({ resolve }) => {
     resolve({})
   }
 
-  SearchPopup.hide = onCancel
+  usePopupHide(SearchPopup, onCancel)
 
   return (
     <Modal

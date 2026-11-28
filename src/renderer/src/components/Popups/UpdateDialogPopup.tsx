@@ -1,5 +1,5 @@
 import { loggerService } from '@logger'
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { handleSaveData, useAppDispatch } from '@renderer/store'
 import { setUpdateState } from '@renderer/store/runtime'
 import { Button, Modal } from 'antd'
@@ -58,7 +58,7 @@ const PopupContainer: React.FC<Props> = ({ releaseInfo, resolve }) => {
     setOpen(false)
   }
 
-  UpdateDialogPopup.hide = onCancel
+  usePopupHide(UpdateDialogPopup, onCancel)
 
   const releaseNotes = releaseInfo?.releaseNotes
 

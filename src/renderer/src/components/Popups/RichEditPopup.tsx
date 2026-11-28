@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
-import { TopView } from '../TopView'
+import { TopView, usePopupHide } from '../TopView'
 
 interface ShowParams {
   content: string
@@ -82,7 +82,7 @@ const PopupContainer: React.FC<Props> = ({
     }
   }
 
-  RichEditPopup.hide = onCancel
+  usePopupHide(RichEditPopup, onCancel)
 
   return (
     <Modal

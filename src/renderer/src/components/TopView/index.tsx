@@ -27,6 +27,30 @@ type ElementItem = {
   element: React.FC | React.ReactNode
 }
 
+type PopupWithHide = {
+  hide: () => void
+}
+
+export function usePopupHide(popup: PopupWithHide, hide: () => void) {
+  const hideRef = useRef(hide)
+
+  useEffect(() => {
+    hideRef.current = hide
+  })
+
+  useEffect(() => {
+    const defaultHide = popup.hide
+
+    // oxlint-disable-next-line react/immutability -- intentional bridge for imperative popup close APIs
+    popup.hide = () => hideRef.current()
+
+    return () => {
+      // oxlint-disable-next-line react/immutability -- restore the static close behavior after unmounting
+      popup.hide = defaultHide
+    }
+  }, [popup])
+}
+
 // const logger = loggerService.withContext('TopView')
 
 const TopViewContainer: React.FC<Props> = ({ children }) => {

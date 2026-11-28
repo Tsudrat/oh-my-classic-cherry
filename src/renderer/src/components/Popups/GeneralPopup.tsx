@@ -1,4 +1,4 @@
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import type { ModalProps } from 'antd'
 import { Modal as AntdModal } from 'antd'
 import type { ReactNode } from 'react'
@@ -28,7 +28,7 @@ const PopupContainer: React.FC<Props> = ({ content, resolve, ...rest }) => {
     resolve({})
   }
 
-  GeneralPopup.hide = onCancel
+  usePopupHide(GeneralPopup, onCancel)
 
   return (
     <Modal

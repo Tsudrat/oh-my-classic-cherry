@@ -69,9 +69,12 @@ export const QuickPanelView: React.FC<Props> = ({ setInputText }) => {
   // 缓存：按 item 缓存拼音文本，避免重复转换
   const pinyinCacheRef = useRef<WeakMap<QuickPanelListItem, string>>(new WeakMap())
 
-  // 跟踪上一次的搜索文本和符号，用于判断是否需要重置index
-  const prevSearchTextRef = useRef('')
-  const prevSymbolRef = useRef('')
+  // 跟踪上一次的搜索文本、符号和列表长度，用于判断是否需要重置index
+  const [selectionContext, setSelectionContext] = useState({
+    symbol: '',
+    searchText: '',
+    listLength: 0
+  })
   const { setTimeoutTimer } = useTimer()
 
   // Use injected filter and sort functions, or fall back to defaults
@@ -79,36 +82,13 @@ export const QuickPanelView: React.FC<Props> = ({ setInputText }) => {
   const sortFn = ctx.sortFn || defaultSortFn
   // 处理搜索，过滤列表（始终保留 alwaysVisible 项在顶部）
   const list = useMemo(() => {
-    // Reset stale state when panel fully closes (both isVisible false AND symbol cleared)
     if (!ctx.isVisible && !ctx.symbol) {
-      prevSymbolRef.current = ''
-      prevSearchTextRef.current = ''
-      setIndex(-1)
       return []
     }
 
     const baseList = (ctx.list || []).filter((item) => !item.hidden)
 
     if (ctx.manageListExternally) {
-      const combinedLength = baseList.length
-      const isSymbolChanged = prevSymbolRef.current !== ctx.symbol
-      if (isSymbolChanged) {
-        const maxIndex = combinedLength > 0 ? combinedLength - 1 : -1
-        const desiredIndex =
-          typeof ctx.defaultIndex === 'number' ? Math.min(Math.max(ctx.defaultIndex, -1), maxIndex) : -1
-        setIndex(desiredIndex)
-      } else {
-        setIndex((prevIndex) => {
-          if (prevIndex >= combinedLength) {
-            return combinedLength > 0 ? combinedLength - 1 : -1
-          }
-          return prevIndex
-        })
-      }
-
-      prevSearchTextRef.current = ''
-      prevSymbolRef.current = ctx.symbol
-
       return baseList
     }
 
@@ -132,37 +112,43 @@ export const QuickPanelView: React.FC<Props> = ({ setInputText }) => {
     // Sort filtered items using injected sort function
     const sortedNormalItems = sortFn(filteredNormalItems, _searchText)
 
-    // 只有在搜索文本变化或面板符号变化时才重置index
-    const isSearchChanged = prevSearchTextRef.current !== searchText
-    const isSymbolChanged = prevSymbolRef.current !== ctx.symbol
-
-    if (isSearchChanged || isSymbolChanged) {
-      const combinedLength = pinnedItems.length + sortedNormalItems.length
-      if (isSymbolChanged) {
-        const maxIndex = combinedLength > 0 ? combinedLength - 1 : -1
-        const desiredIndex =
-          typeof ctx.defaultIndex === 'number' ? Math.min(Math.max(ctx.defaultIndex, -1), maxIndex) : -1
-        setIndex(desiredIndex)
-      } else {
-        setIndex(-1) // 搜索文本变化时不默认高亮
-      }
-    } else {
-      // 如果当前index超出范围，调整到有效范围内
-      setIndex((prevIndex) => {
-        const combinedLength = pinnedItems.length + sortedNormalItems.length
-        if (prevIndex >= combinedLength) {
-          return combinedLength > 0 ? combinedLength - 1 : -1
-        }
-        return prevIndex
-      })
-    }
-
-    prevSearchTextRef.current = searchText
-    prevSymbolRef.current = ctx.symbol
-
     // 固定项置顶 + 排序后的普通项
     return [...pinnedItems, ...sortedNormalItems]
-  }, [ctx.isVisible, ctx.symbol, ctx.manageListExternally, ctx.list, ctx.defaultIndex, searchText, filterFn, sortFn])
+  }, [ctx.isVisible, ctx.symbol, ctx.manageListExternally, ctx.list, searchText, filterFn, sortFn])
+
+  // Adjust the selection when the panel inputs change. React supports this conditional
+  // state adjustment during render as the alternative to cascading effect updates.
+  const maxIndex = list.length > 0 ? list.length - 1 : -1
+  const trackedSearchText = ctx.manageListExternally ? '' : searchText
+  const isPanelClosed = !ctx.isVisible && !ctx.symbol
+  const nextSelectionContext = isPanelClosed
+    ? { symbol: '', searchText: '', listLength: 0 }
+    : { symbol: ctx.symbol, searchText: trackedSearchText, listLength: list.length }
+  const selectionContextChanged =
+    selectionContext.symbol !== nextSelectionContext.symbol ||
+    selectionContext.searchText !== nextSelectionContext.searchText ||
+    selectionContext.listLength !== nextSelectionContext.listLength
+
+  if (selectionContextChanged) {
+    let nextIndex = _index
+
+    if (isPanelClosed) {
+      nextIndex = -1
+    } else if (selectionContext.symbol !== ctx.symbol) {
+      nextIndex = typeof ctx.defaultIndex === 'number' ? Math.min(Math.max(ctx.defaultIndex, -1), maxIndex) : -1
+    } else if (!ctx.manageListExternally && selectionContext.searchText !== trackedSearchText) {
+      // 搜索文本变化时不默认高亮
+      nextIndex = -1
+    } else if (_index > maxIndex) {
+      // 如果当前index超出范围，调整到有效范围内
+      nextIndex = maxIndex
+    }
+
+    if (nextIndex !== _index) {
+      setIndex(nextIndex)
+    }
+    setSelectionContext(nextSelectionContext)
+  }
 
   const canForwardAndBackward = useMemo(() => {
     return list.some((item) => item.isMenu) || historyPanel.length > 0

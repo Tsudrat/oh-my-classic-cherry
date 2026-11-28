@@ -1,4 +1,4 @@
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { Modal } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -29,7 +29,7 @@ const PopupContainer: React.FC<Props> = ({ providerId, resolve }) => {
     resolve({})
   }
 
-  ApiOptionsSettingsPopup.hide = onCancel
+  usePopupHide(ApiOptionsSettingsPopup, onCancel)
 
   return (
     <Modal

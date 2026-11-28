@@ -1,4 +1,4 @@
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { useEnableDeveloperMode } from '@renderer/hooks/useSettings'
 import type { Message } from '@renderer/types'
 import type { MessageBlock } from '@renderer/types/newMessage'
@@ -33,7 +33,7 @@ const InspectMessagePopupContainer: React.FC<Props> = ({ title, message, blocks,
     resolve({})
   }
 
-  InspectMessagePopup.hide = onCancel
+  usePopupHide(InspectMessagePopup, onCancel)
 
   if (!enableDeveloperMode) {
     return null

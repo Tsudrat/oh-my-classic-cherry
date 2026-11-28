@@ -1,5 +1,5 @@
 import PrivacyPopup from '@renderer/components/Popups/PrivacyPopup'
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { LATEST_PRIVACY_POLICY_VERSION } from '@renderer/config/constant'
 import { useAppDispatch } from '@renderer/store'
 import { setEnableDataCollection, setPrivacyPolicyVersion } from '@renderer/store/settings'
@@ -48,7 +48,7 @@ const PopupContainer: FC<Props> = ({ resolve }) => {
     resolve({})
   }
 
-  PrivacyPolicyUpdateNotice.hide = () => setOpen(false)
+  usePopupHide(PrivacyPolicyUpdateNotice, () => setOpen(false))
 
   return (
     <Modal

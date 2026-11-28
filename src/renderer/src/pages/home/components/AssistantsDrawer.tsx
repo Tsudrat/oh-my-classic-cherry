@@ -1,4 +1,4 @@
-import { TopView } from '@renderer/components/TopView'
+import { TopView, usePopupHide } from '@renderer/components/TopView'
 import { isMac } from '@renderer/config/constant'
 import { useTimer } from '@renderer/hooks/useTimer'
 import type { Assistant, Topic } from '@renderer/types'
@@ -33,7 +33,7 @@ const PopupContainer: React.FC<Props> = ({
     setTimeoutTimer('onClose', resolve, 300)
   }
 
-  AssistantsDrawer.hide = onClose
+  usePopupHide(AssistantsDrawer, onClose)
 
   return (
     <Drawer

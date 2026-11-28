@@ -95,28 +95,26 @@ const TranslateHistoryList: FC<TranslateHistoryProps> = ({ isOpen, onHistoryItem
     setDisplayedHistory(translateHistory.filter(finalFilter))
   }, [finalFilter, translateHistory])
 
-  const Title = () => {
-    return (
-      <Flex align="center">
-        {t('translate.history.title')}
-        <Button
-          icon={showStared ? <StarFilled /> : <StarOutlined />}
-          color="yellow"
-          variant="text"
-          onClick={(e) => {
-            e.stopPropagation()
-            setShowStared(!showStared)
-          }}
-        />
-      </Flex>
-    )
-  }
+  const title = (
+    <Flex align="center">
+      {t('translate.history.title')}
+      <Button
+        icon={showStared ? <StarFilled /> : <StarOutlined />}
+        color="yellow"
+        variant="text"
+        onClick={(e) => {
+          e.stopPropagation()
+          setShowStared(!showStared)
+        }}
+      />
+    </Flex>
+  )
 
   const deferredHistory = useDeferredValue(displayedHistory)
 
   return (
     <Drawer
-      title={<Title />}
+      title={title}
       closeIcon={null}
       open={isOpen}
       maskClosable

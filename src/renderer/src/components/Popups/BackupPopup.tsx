@@ -7,7 +7,7 @@ import { Modal, Progress } from 'antd'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TopView } from '../TopView'
+import { TopView, usePopupHide } from '../TopView'
 
 const logger = loggerService.withContext('BackupPopup')
 
@@ -70,7 +70,7 @@ const PopupContainer: React.FC<Props> = ({ resolve, backupType = 'direct' }) => 
     return getBackupProgressLabel(progressData.stage)
   }
 
-  BackupPopup.hide = onCancel
+  usePopupHide(BackupPopup, onCancel)
 
   const isDisabled = progressData ? progressData.stage !== 'completed' : false
   const isLanTransferMode = backupType === 'lan-transfer'
