@@ -19,8 +19,8 @@ import {
   isDoubaoSeedAfter251015,
   isDoubaoThinkingAutoModel,
   isGemini3ThinkingTokenModel,
-  isGemini4HydrogenModel,
   isGemini4Model,
+  isGemini4XHighModel,
   isGLM52Model,
   isGLM53Model,
   isGrok4FastReasoningModel,
@@ -37,6 +37,7 @@ import {
   isOpenAIModel,
   isOpenAIOpenWeightModel,
   isOpenAIReasoningModel,
+  isQwen4EffortModel,
   isQwen35to39Model,
   isQwen38EffortModel,
   isQwenAlwaysThinkModel,
@@ -191,7 +192,7 @@ export function getReasoningEffort(assistant: Assistant, model: Model): Reasonin
     if (isGLM52Model(model) && provider.id === SystemProviderIds.openrouter) {
       return {}
     }
-    if (isQwen38EffortModel(model)) {
+    if (isQwen38EffortModel(model) || isQwen4EffortModel(model)) {
       if (getLowerBaseModelName(model.id).includes('max-preview')) return {}
       if (provider.id === SystemProviderIds.openrouter) return {}
       return { reasoningEffort: 'none' }
@@ -478,7 +479,7 @@ export function getReasoningEffort(assistant: Assistant, model: Model): Reasonin
     return ['low', 'medium', 'high', 'max'].includes(effort) ? { reasoningEffort: effort } : {}
   }
 
-  if (isQwen38EffortModel(model)) {
+  if (isQwen38EffortModel(model) || isQwen4EffortModel(model)) {
     const supportedOptions = getModelSupportedReasoningEffortOptions(model)
     if (!supportedOptions?.includes(reasoningEffort)) return {}
     if (provider.id === SystemProviderIds.openrouter) {
@@ -694,7 +695,7 @@ export function getReasoningEffort(assistant: Assistant, model: Model): Reasonin
       const gemini4Clamp: Partial<Record<ReasoningEffortOption, OpenAIReasoningEffort>> = {
         none: 'low',
         minimal: 'low',
-        max: isGemini4HydrogenModel(model) ? 'xhigh' : 'high'
+        max: isGemini4XHighModel(model) ? 'xhigh' : 'high'
       }
       return {
         reasoningEffort: isGemini4Model(model) ? (gemini4Clamp[reasoningEffort] ?? reasoningEffort) : reasoningEffort
@@ -1099,7 +1100,7 @@ export function getGeminiReasoningParams(
     }
   }
 
-  // Gemini 4 only accepts `thinking_level` (low|medium|high; Hydrogen adds `xhigh` as its
+  // Gemini 4 only accepts `thinking_level` (low|medium|high; Hydrogen/Neon add `xhigh` as their
   // default). `thinking_budget` and `minimal` both return HTTP 400, and thinking cannot be
   // disabled — so clamp none/minimal to `low` and `max` to the model's top level.
   // https://ai.google.dev/gemini-api/docs/gemini-4
@@ -1109,7 +1110,7 @@ export function getGeminiReasoningParams(
       thinkingLevel = 'low'
     }
     if (reasoningEffort === 'max' || reasoningEffort === 'xhigh') {
-      thinkingLevel = isGemini4HydrogenModel(model) ? 'xhigh' : 'high'
+      thinkingLevel = isGemini4XHighModel(model) ? 'xhigh' : 'high'
     }
     return {
       thinkingConfig: {

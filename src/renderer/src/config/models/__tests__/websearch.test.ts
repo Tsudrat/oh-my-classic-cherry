@@ -334,13 +334,20 @@ describe('websearch helpers', () => {
   })
 
   describe('provider-specific regex coverage', () => {
-    it.each(['qwen-turbo', 'qwen-max-0919', 'qwen3-max', 'qwen-plus-2024', 'qwq-32b'])(
-      'dashscope treats %s as searchable',
-      (id) => {
-        providerMock.mockReturnValue(createProvider({ id: 'dashscope' }))
-        expect(isWebSearchModel(createModel({ id }))).toBe(true)
-      }
-    )
+    it.each([
+      'qwen-turbo',
+      'qwen-max-0919',
+      'qwen3-max',
+      'qwen-plus-2024',
+      'qwq-32b',
+      'qwen3.8-max',
+      'qwen3.8-max-0902',
+      'qwen3.8-flash',
+      'qwen4-max'
+    ])('dashscope treats %s as searchable', (id) => {
+      providerMock.mockReturnValue(createProvider({ id: 'dashscope' }))
+      expect(isWebSearchModel(createModel({ id }))).toBe(true)
+    })
 
     it.each(['qwen-1.5-chat', 'custom-model'])('dashscope ignores %s', (id) => {
       providerMock.mockReturnValue(createProvider({ id: 'dashscope' }))
@@ -382,6 +389,13 @@ describe('websearch helpers', () => {
         expect(GEMINI_SEARCH_REGEX.test('gemini-flash-latest')).toBe(true)
         expect(GEMINI_SEARCH_REGEX.test('gemini-pro-latest')).toBe(true)
         expect(GEMINI_SEARCH_REGEX.test('gemini-flash-lite-latest')).toBe(true)
+      })
+
+      it('should match gemini 4 models', () => {
+        expect(GEMINI_SEARCH_REGEX.test('gemini-4-argon')).toBe(true)
+        expect(GEMINI_SEARCH_REGEX.test('gemini-4-carbon')).toBe(true)
+        expect(GEMINI_SEARCH_REGEX.test('gemini-4-hydrogen')).toBe(true)
+        expect(GEMINI_SEARCH_REGEX.test('gemini-4-neon')).toBe(true)
       })
 
       it('should match gemini 3 models', () => {

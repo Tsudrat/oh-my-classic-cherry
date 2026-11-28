@@ -316,6 +316,8 @@ export const SYSTEM_MODELS: Record<SystemProviderId | 'defaultModel', Model[]> =
   ],
   alayanew: [],
   openai: [
+    { id: 'gpt-6.2-astra', provider: 'openai', name: ' GPT 6.2 Astra', group: 'gpt-6.2' },
+    { id: 'gpt-6.2-sol', provider: 'openai', name: ' GPT 6.2 Sol', group: 'gpt-6.2' },
     { id: 'gpt-6.1-sol', provider: 'openai', name: ' GPT 6.1 Sol', group: 'gpt-6.1' },
     { id: 'gpt-6.1-terra', provider: 'openai', name: ' GPT 6.1 Terra', group: 'gpt-6.1' },
     { id: 'gpt-6-astra', provider: 'openai', name: ' GPT 6 Astra', group: 'gpt-6' },
@@ -349,6 +351,12 @@ export const SYSTEM_MODELS: Record<SystemProviderId | 'defaultModel', Model[]> =
     }
   ],
   gemini: [
+    {
+      id: 'gemini-4-neon',
+      provider: 'gemini',
+      name: 'Gemini 4 Neon',
+      group: 'Gemini 4'
+    },
     {
       id: 'gemini-4-hydrogen',
       provider: 'gemini',
@@ -981,7 +989,10 @@ export const SYSTEM_MODELS: Record<SystemProviderId | 'defaultModel', Model[]> =
   dashscope: [
     { id: 'qwen-image-3.0', name: 'Qwen Image 3.0', provider: 'dashscope', group: 'Qwen Image' },
     { id: 'qwen-image-3.0-pro', name: 'Qwen Image 3.0 Pro', provider: 'dashscope', group: 'Qwen Image' },
+    { id: 'qwen4-max', name: 'Qwen4 Max', provider: 'dashscope', group: 'Qwen' },
     { id: 'qwen3.8-max', name: 'Qwen3.8 Max', provider: 'dashscope', group: 'Qwen' },
+    { id: 'qwen3.8-2.4t-a95b', name: 'Qwen3.8 2.4T A95B', provider: 'dashscope', group: 'Qwen' },
+    { id: 'qwen3.8-27b', name: 'Qwen3.8 27B', provider: 'dashscope', group: 'Qwen' },
     { id: 'qwen3.8-max-preview', name: 'Qwen3.8 Max Preview', provider: 'dashscope', group: 'Qwen' },
     { id: 'qwen3.8-flash', name: 'Qwen3.8 Flash', provider: 'dashscope', group: 'Qwen' },
     { id: 'qwen3.8-flash-next', name: 'Qwen3.8 Flash Next', provider: 'dashscope', group: 'Qwen' },

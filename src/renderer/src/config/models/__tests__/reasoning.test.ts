@@ -912,6 +912,7 @@ describe('isReasoningModel', () => {
     ['gemini-3.7-flash', undefined, ['default', 'low', 'medium', 'high']],
     ['grok-4.6', undefined, ['default', 'low', 'medium', 'high', 'xhigh']],
     ['grok-4.7', undefined, ['default', 'low', 'medium', 'high', 'xhigh']],
+    ['qwen4-max', undefined, ['default', 'none', 'low', 'high', 'xhigh']],
     ['qwen3.8-2.4t-a95b', undefined, ['default', 'low', 'medium', 'xhigh']],
     ['qwen3.8-27b', undefined, ['default', 'none', 'low', 'medium', 'xhigh']],
     ['qwen/qwen3.8-27b', 'openrouter', ['default', 'low', 'medium', 'xhigh']],
@@ -928,11 +929,14 @@ describe('isReasoningModel', () => {
     ['muse-ember-1.0', 'meta', ['default', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max']],
     ['thinkingmachines/inkling', 'openrouter', ['default', 'none', 'minimal', 'low', 'medium', 'high', 'xhigh']],
     ['inkling-2-small', undefined, ['default', 'none', 'minimal', 'low', 'medium', 'high', 'xhigh']],
+    ['inkling-2-flash', undefined, ['default', 'none', 'minimal', 'low', 'medium', 'high', 'xhigh']],
+    ['thinkingmachines/inkling-2-mini', 'openrouter', ['default', 'none', 'minimal', 'low', 'medium', 'high', 'xhigh']],
     ['reflection/beam-1.0-501b-a23b', 'openrouter', ['default', 'low', 'medium', 'high', 'xhigh', 'max']],
     ['Beam-1.0-501B-A23B', 'reflection', ['default', 'low', 'medium', 'high', 'xhigh', 'max']],
     ['gemini-4-argon', undefined, ['default', 'low', 'medium', 'high']],
     ['gemini-4-carbon', undefined, ['default', 'low', 'medium', 'high']],
     ['gemini-4-hydrogen', undefined, ['default', 'low', 'medium', 'high', 'xhigh']],
+    ['gemini-4-neon', undefined, ['default', 'low', 'medium', 'high', 'xhigh']],
     ['gemini-4-hydrogen-cyber-permissive', undefined, ['default', 'low', 'medium', 'high', 'xhigh']],
     ['hy4', undefined, ['default', 'none', 'high']],
     ['hy4-preview', undefined, ['default', 'none', 'high']],
@@ -966,9 +970,14 @@ describe('isReasoningModel', () => {
     ['gpt-6-luna', undefined, 'gpt6'],
     ['gpt-6.1-sol', undefined, 'gpt6_1'],
     ['gpt-6.1-terra', undefined, 'gpt6'],
+    ['gpt-6.2-astra', undefined, 'gpt6_2'],
+    ['gpt-6.2-sol', undefined, 'gpt6_2'],
+    ['gpt-6-2-sol', undefined, 'gpt6_2'],
     ['gemini-4-argon', undefined, 'gemini4'],
     ['gemini-4-hydrogen', undefined, 'gemini4_hydrogen'],
     ['gemini-4-carbon', undefined, 'gemini4'],
+    ['gemini-4-neon', undefined, 'gemini4_hydrogen'],
+    ['qwen4-max', 'dashscope', 'qwen4'],
     ['claude-fable-5-2', undefined, 'claude5_always'],
     ['claude-sonnet-5-5', undefined, 'claude5'],
     ['claude-haiku-5-5', undefined, 'claude5'],
@@ -981,17 +990,25 @@ describe('isReasoningModel', () => {
     ['muse-ember-1.0', 'meta', 'muse'],
     ['thinkingmachines/inkling', 'openrouter', 'inkling'],
     ['inkling-2-small', undefined, 'inkling'],
+    ['inkling-2-flash', undefined, 'inkling'],
+    ['thinkingmachines/inkling-2-mini', 'openrouter', 'inkling'],
     ['reflection/beam-1.0-501b-a23b', 'openrouter', 'beam']
   ])('maps %s on %s to thinking type %s', (id, provider, expected) => {
     expect(getThinkModelType(createModel({ id, provider }))).toBe(expected)
   })
 
-  it.each(['gpt-6-sol', 'gpt-6-astra', 'gpt-6.1-sol', 'gpt-6.1-terra', 'hy4', 'hy4-preview'])(
-    'recognizes %s as a reasoning model',
-    (id) => {
-      expect(isReasoningModel(createModel({ id }))).toBe(true)
-    }
-  )
+  it.each([
+    'gpt-6-sol',
+    'gpt-6-astra',
+    'gpt-6.1-sol',
+    'gpt-6.1-terra',
+    'gpt-6.2-astra',
+    'gpt-6.2-sol',
+    'hy4',
+    'hy4-preview'
+  ])('recognizes %s as a reasoning model', (id) => {
+    expect(isReasoningModel(createModel({ id }))).toBe(true)
+  })
 
   it('excludes non-fixed reasoning models from isFixedReasoningModel', () => {
     // Models that support thinking tokens or reasoning effort should NOT be fixed reasoning models
